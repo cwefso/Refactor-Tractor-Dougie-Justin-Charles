@@ -1,9 +1,7 @@
 import './css/base.scss';
 import './css/styles.scss';
 
-import recipeData from './data/recipes';
-import ingredientsData from './data/ingredients';
-import users from './data/users';
+import recipeData from './data/recipes.js'
 
 import Pantry from './pantry';
 import Recipe from './recipe';
@@ -11,17 +9,77 @@ import User from './user';
 import Cookbook from './cookbook';
 import domUpdates from './domUpdates';
 
+var usersUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'
+
+var users;
+
+function getUsersData() {
+  return fetch(usersUrl)
+    .then(res => {
+      return res.json()
+    })
+    .then(data => {
+      return data.wcUsersData
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+}
+
+var indredientsUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData'
+
+var ingredientsData;
+
+function getIngredientsData() {
+  return fetch(indredientsUrl)
+    .then(res => {
+      return res.json()
+    })
+    .then(data => {
+      return data.ingredientsData
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+}
+
+// var recipesUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData'
+
+// // var recipeData;
+
+// function getRecipeData() {
+//   return fetch(recipesUrl)
+//     .then(res => {
+//       return res.json()
+//     })
+//     .then(data => {
+//       return data.recipeData
+//     })
+//     .catch(err => {
+//       console.log(err.message)
+//     })
+// }
+
+
+window.onload = getUsersData().then(data => {
+  users = data
+  onStartup()
+})
+  getIngredientsData().then(data => {ingredientsData = data})
+
+// getRecipeData().then(data => {recipeData = data})
+
+
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
 let cookbook = new Cookbook(recipeData);
 let user, pantry;
 
-window.onload = onStartup();
-
 homeButton.addEventListener('click', cardButtonConditionals);
 favButton.addEventListener('click', viewFavorites);
 cardArea.addEventListener('click', cardButtonConditionals);
+
 
 function onStartup() {
   let userId = (Math.floor(Math.random() * 49) + 1)
