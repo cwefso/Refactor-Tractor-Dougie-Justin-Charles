@@ -45,7 +45,7 @@ function getIngredientsData() {
 
 // var recipesUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData'
 
-// // var recipeData;
+// var recipeData;
 
 // function getRecipeData() {
 //   return fetch(recipesUrl)
@@ -63,11 +63,10 @@ function getIngredientsData() {
 
 window.onload = getUsersData().then(data => {
   users = data
+  getIngredientsData().then(data => {ingredientsData = data})
+  // getRecipeData().then(data =>{recipeData = data})
   onStartup()
 })
-  getIngredientsData().then(data => {ingredientsData = data})
-
-// getRecipeData().then(data => {recipeData = data})
 
 
 let favButton = document.querySelector('.view-favorites');
