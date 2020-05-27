@@ -45,7 +45,7 @@ class User {
     })
   }
 
-  // searchSavedReciped() {
+  // searchSavedRecipes() {
   //   //search saved recipes by name or ingredient
   // }
 }
