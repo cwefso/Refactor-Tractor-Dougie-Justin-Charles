@@ -32,6 +32,18 @@ class User {
       });
     });
   }
+
+  addRecipeToWeek() {
+   // Decide to cook a recipe that week(add to my recipesToCook)
+  }
+
+  filterRecipesToCook() {
+    //Filter recipesToCook = possibly combine with filter Favorites?
+  }
+
+  searchSavedReciped() {
+    //search saved recipes by name or ingredient
+  }
 }
 
 
