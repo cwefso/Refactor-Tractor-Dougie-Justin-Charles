@@ -4,7 +4,7 @@ class User {
     this.name = name;
     this.pantry = pantry;
     this.favoriteRecipes = [];
-
+    this.recipesToCook = [];
   }
 
   addToFavorites(recipe) {
@@ -34,11 +34,14 @@ class User {
   }
 
   addRecipeToWeek() {
-   // Decide to cook a recipe that week(add to my recipesToCook)
+    if (!this.recipesToCook.includes(recipe)) {
+      this.recipesToCook.push(recipe)
   }
 
   filterRecipesToCook() {
-    //Filter recipesToCook = possibly combine with filter Favorites?
+    return this.recipesToCook.filter(recipe => {
+      return recipe.tags.includes(tag);
+    });
   }
 
   searchSavedReciped() {

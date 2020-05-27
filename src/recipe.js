@@ -21,6 +21,16 @@ class Recipe {
     return costCounter;
   }
 
+  filterRecipes() {
+    //user should be able to filter recipes by tag
+  }
+
+  searchRecipes() {
+    //user should be able to search recipes by indredients
+  }
+
+  
+
 }
 
 export default Recipe;
