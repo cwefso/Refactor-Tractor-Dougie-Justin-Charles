@@ -194,7 +194,6 @@ function getFavorites() {
 }
 
 function populateCards(recipeData) {
-  // const recipes = recipeData || []
   cardArea.innerHTML = '';
   if (cardArea.classList.contains('all')) {
     cardArea.classList.remove('all')
