@@ -20,7 +20,7 @@ class User {
 
   filterFavorites(tag) {
     return this.favoriteRecipes.filter(recipe => {
-      return recipe.tags.includes(tag);
+      return recipe.tags.includes(tag)
     });
   }
 
@@ -29,24 +29,25 @@ class User {
       return recipe.name.includes(strgToSrch)
       || recipe.ingredients.find(ingredient => {
         return ingredient.name.includes(strgToSrch)
-      });
-    });
+      })
+    })
   }
 
   addRecipeToWeek() {
     if (!this.recipesToCook.includes(recipe)) {
       this.recipesToCook.push(recipe)
-  }
+    }
+  }  
 
   filterRecipesToCook() {
     return this.recipesToCook.filter(recipe => {
-      return recipe.tags.includes(tag);
-    });
+      return recipe.tags.includes(tag)
+    })
   }
 
-  searchSavedReciped() {
-    //search saved recipes by name or ingredient
-  }
+  // searchSavedReciped() {
+  //   //search saved recipes by name or ingredient
+  // }
 }
 
 
