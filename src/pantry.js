@@ -50,9 +50,7 @@ class Pantry {
       let pantryIngredient = this.returnIngredient(recipeIngredient.id, filteredPantry)
       if(pantryIngredient) {
         let amountNeeded = recipeIngredient.amount -= pantryIngredient.amount
-        if(amountNeeded > 0) {
-          totalNeeded.push(recipeIngredient)
-        }
+        if(amountNeeded > 0) totalNeeded.push(recipeIngredient)
       } else {
         totalNeeded.push(recipeIngredient)
       }
@@ -60,7 +58,18 @@ class Pantry {
     },[])
     return ingredientsNeeded[0] ? ingredientsNeeded : null
   }
-  returnCostToCookRecipe(recipe) {}
+  fetchIngredientCost() {
+    const url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData";
+    return fetch(url)
+    .then(response => response.json())
+    .then(data => data.ingredientsData)
+    .catch(err => err.message);
+  }
+  returnCostToCook(recipe) {
+    let ingredientsNeeded = this.returnIngredientsNeeded(recipe)
+
+
+  }
   addIngredientsToPantry() {}
   removeIngredientsUsed() {}
 }
