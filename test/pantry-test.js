@@ -504,4 +504,12 @@ describe('Pantry', () => {
       ])
     })
   })
+  describe('cost to cook recipe', () => {
+    it('should return 0 if pantry has all ingredients', () => {
+      let noCost = justinPantry.returnCostToCook(recipeData);
+      expect(recipeData).to.equal(0)
+    })
+    it.skip('should return the cost of the whole recipe if pantry has no ingredients', () => {})
+    it.skip('should return cost if user has half the amount of ingredients in pantry', () => {})
+  })
 })
