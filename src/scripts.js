@@ -1,17 +1,25 @@
 import './css/base.scss';
 import './css/styles.scss';
 
-import recipeData from './data/recipes.js'
-
 import Pantry from './pantry';
 import Recipe from './recipe';
 import User from './user';
 import Cookbook from './cookbook';
 import domUpdates from './domUpdates';
 
-var usersUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'
+let favButton = document.querySelector('.view-favorites');
+let homeButton = document.querySelector('.home')
+let cardArea = document.querySelector('.all-cards');
+// let cookbook = new Cookbook(recipeData);
+let user, pantry;
 
-var users;
+homeButton.addEventListener('click', cardButtonConditionals);
+favButton.addEventListener('click', viewFavorites);
+cardArea.addEventListener('click', cardButtonConditionals);
+
+
+var usersUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'
+var users
 
 function getUsersData() {
   return fetch(usersUrl)
@@ -27,8 +35,7 @@ function getUsersData() {
 }
 
 var indredientsUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData'
-
-var ingredientsData;
+var ingredientsData
 
 function getIngredientsData() {
   return fetch(indredientsUrl)
@@ -43,42 +50,30 @@ function getIngredientsData() {
     })
 }
 
-// var recipesUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData'
+var recipesUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData'
+var recipeData
 
-// var recipeData;
+function getRecipeData() {
+  return fetch(recipesUrl)
+    .then(res => {
+      return res.json()
+    })
+    .then(data => {
+      return data.recipeData
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+}
 
-// function getRecipeData() {
-//   return fetch(recipesUrl)
-//     .then(res => {
-//       return res.json()
-//     })
-//     .then(data => {
-//       return data.recipeData
-//     })
-//     .catch(err => {
-//       console.log(err.message)
-//     })
-// }
-
-
-window.onload = getUsersData().then(data => {
-  users = data
-  getIngredientsData().then(data => {ingredientsData = data})
-  // getRecipeData().then(data =>{recipeData = data})
+const getData = async() => {
+  users = await getUsersData()
+  recipeData = await getRecipeData()
+  ingredientsData = await getIngredientsData()
   onStartup()
-})
+}
 
-
-let favButton = document.querySelector('.view-favorites');
-let homeButton = document.querySelector('.home')
-let cardArea = document.querySelector('.all-cards');
-let cookbook = new Cookbook(recipeData);
-let user, pantry;
-
-homeButton.addEventListener('click', cardButtonConditionals);
-favButton.addEventListener('click', viewFavorites);
-cardArea.addEventListener('click', cardButtonConditionals);
-
+window.onload = getData()
 
 function onStartup() {
   let userId = (Math.floor(Math.random() * 49) + 1)
@@ -87,7 +82,7 @@ function onStartup() {
   });
   user = new User(newUser)
   pantry = new Pantry(newUser.pantry)
-  populateCards(cookbook.recipes);
+  populateCards(recipeData);
   greetUser();
 }
 
@@ -97,7 +92,7 @@ function viewFavorites() {
   }
   if (!user.favoriteRecipes.length) {
     favButton.innerHTML = 'You have no favorites!';
-    populateCards(cookbook.recipes);
+    populateCards(recipeData);
     return
   } else {
     favButton.innerHTML = 'Refresh Favorites'
@@ -130,7 +125,7 @@ function greetUser() {
 }
 
 function favoriteCard(event) {
-  let specificRecipe = cookbook.recipes.find(recipe => {
+  let specificRecipe = recipeData.find(recipe => {
     if (recipe.id  === Number(event.target.id)) {
       return recipe;
     }
@@ -152,13 +147,13 @@ function cardButtonConditionals(event) {
     displayDirections(event);
   } else if (event.target.classList.contains('home')) {
     favButton.innerHTML = 'View Favorites';
-    populateCards(cookbook.recipes);
+    populateCards(recipeData);
   }
 }
 
 
 function displayDirections(event) {
-  let newRecipeInfo = cookbook.recipes.find(recipe => {
+  let newRecipeInfo = recipeData.find(recipe => {
     if (recipe.id === Number(event.target.id)) {
       return recipe;
     }
@@ -198,12 +193,12 @@ function getFavorites() {
   } else return
 }
 
-function populateCards(recipes) {
+function populateCards(recipeData) {
   cardArea.innerHTML = '';
   if (cardArea.classList.contains('all')) {
     cardArea.classList.remove('all')
   }
-  recipes.forEach(recipe => {
+  recipeData.forEach(recipe => {
     cardArea.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
     class='card'>
         <header id='${recipe.id}' class='card-header'>
