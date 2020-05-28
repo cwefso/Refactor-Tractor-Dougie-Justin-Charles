@@ -93,15 +93,11 @@ h1 {
 
 
 
-.add-button {
-  background-color: #EBF5EE;
-  display: flex;
-  width: 12%;
-}
-
-.add {
-  width: 100%;
-}
+// .add-button {
+//   background-color: #EBF5EE;
+//   display: flex;
+//   width: 12%;
+// }
 
 .hidden {
   display: none;
@@ -115,6 +111,19 @@ h1 {
   background-position: center;
   width: 13%;
 }
+
+.add {
+  background-color: #EBF5EE;
+  background-image: url(https://image.flaticon.com/icons/svg/32/32339.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 13%;
+}
+
+// .add img {
+//   max-width: 90%;
+//   min-width: 90%;
+// }
 
 .all-cards {
   display: grid;
@@ -189,5 +198,11 @@ main {
 
 .favorite-active {
   background-image: url(https://image.flaticon.com/icons/svg/148/148841.svg);
+  background-repeat: no-repeat;
+}
+
+.add-active {
+  background-image: none;
+  background-color: green($color: #43ca0d);
   background-repeat: no-repeat;
 }
