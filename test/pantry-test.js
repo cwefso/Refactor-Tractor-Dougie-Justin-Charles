@@ -10,8 +10,10 @@ let user1Pantry;
 let userData2
 let justin
 let justinPantry
-let ingredients;
 let recipeData
+let halfUser
+let halfUserData
+let halfUserPantry
 
 describe('Pantry', () => {
   beforeEach(() => {
@@ -92,6 +94,62 @@ describe('Pantry', () => {
         }
       ]
     }
+    halfUserData = {
+      "id": 3,
+      "name": "half recipe",
+      "pantry" : [
+        {
+          "id": 12061,
+          "amount": 0.25,
+        },
+        {
+          "id": 19334,
+          "amount": 3,
+        
+        },
+        {
+          "id": 12104,
+          "amount": 0.25,
+        },
+        {
+          "id": 12115,
+          "amount": 0.5,
+        },
+        {
+          "id": 4047,
+          "amount": 3,
+        },
+        {
+          "id": 10019071,
+          "amount": 0.5,
+        },
+        {
+          "id": 8212,
+          "amount": 0.5,
+        },
+        {
+          "id": 19911,
+          "amount": 2.5,
+        },
+        {
+          "id": 8121,
+          "amount": 1.5,
+        },
+        {
+          "id": 12142,
+          "amount": 0.25,
+        },
+        {
+          "id": 2047,
+          "amount": 0.125,
+        },
+        {
+          "id": 2050,
+          "amount": 0.5,
+        }
+      ]
+    }
+
     recipeData = {
       "name": "Creamy Coconut Yogurt Bowl with Chocolate Granola (Video)",
       "id": 721146,
@@ -225,9 +283,11 @@ describe('Pantry', () => {
       ]
     },
     user1 = new User(userData);
-    justin = new User(userData2)
+    justin = new User(userData2);
+    halfUser = new User(halfUserData);
     user1Pantry = new Pantry(user1);
     justinPantry = new Pantry(justin);
+    halfUserPantry = new Pantry(halfUser);
   })
   it('should be a function', () => {
     expect(Pantry).to.be.a('function');
@@ -263,28 +323,185 @@ describe('Pantry', () => {
     let pantry2 = new Pantry("")
     expect(pantry2.contents).to.equal(null)
   });
-  it('returnIds should return array with id numbers in pantry', () => {
-    expect(justinPantry.returnIds()).to.eql([
-      12061,    19334,
-      12104,    12115,
-       4047, 10019071,
-       8212,    19911,
-       8121,    12142,
-       2047,     2050
-    ]);
+  describe('return ids', () => {
+
+    it('returnIds should return array with id numbers in pantry', () => {
+      expect(justinPantry.returnIds(justinPantry.contents)).to.eql([
+        12061,    19334,
+        12104,    12115,
+        4047, 10019071,
+        8212,    19911,
+        8121,    12142,
+        2047,     2050
+      ]);
+    });
+    it('should return ids in recipe', () => {
+      expect(justinPantry.returnIds(recipeData.ingredients)).to.eql([
+        12061,    19334,
+        12104,    12115,
+         4047, 10019071,
+         8212,    19911,
+         8121,    12142,
+         2047,     2050
+      ])
+    })
   });
-  it('isEnough should return true if pantry has enough ingredients for recipe', () => {
-    let trueTest = justinPantry.isEnough(recipeData);
-    expect(trueTest).to.equal(true);
-  });
-  it('isEnough should return false if pantry doesnt have enough ingredients', () => {
-    let falseTest = user1Pantry.isEnough(recipeData)
-    expect(falseTest).to.equal(false)
-  });
-  it('isEnough should return null if not passed an object', () => {
-    let nullTest = user1Pantry.isEnough()
-    expect(nullTest).to.equal(null)
-  });
-  it('should determine amount of ingredients still needed to cook a recipe based on pantry', () => {});
-  it('', () => {});
+  describe('returnPantryIngredient', () => {
+
+    it('should return item in pantry if given id and location to search', () => {
+      expect(justinPantry.returnIngredient(12061, justinPantry.contents)).to.eql({ id: 12061, amount: 0.5 })
+    });
+    it.skip('should return null if not in pantry', () => { });
+  })
+  describe('isEnough', () => {
+    it('should return true if pantry has enough ingredients for recipe', () => {
+      let trueTest = justinPantry.hasEnough(recipeData);
+      expect(trueTest).to.equal(true);
+    });
+    it('should return false if pantry doesnt have enough ingredients', () => {
+      let falseTest = user1Pantry.hasEnough(recipeData)
+      expect(falseTest).to.equal(false)
+    });
+    it.skip('should return null if not passed an object', () => {
+      let nullTest = user1Pantry.hasEnough()
+      expect(nullTest).to.equal(null)
+    });
+  })
+  describe('amount in recipe',() => {
+    it('should filter pantry from recipe',() => {
+      let filterTest = justinPantry.filterPantryFromRecipe(recipeData)
+      expect(filterTest).to.eql([
+        { id: 12061, amount: 0.5 },
+        { id: 19334, amount: 6 },
+        { id: 12104, amount: 0.5 },
+        { id: 12115, amount: 1 },
+        { id: 4047, amount: 6 },
+        { id: 10019071, amount: 1 },
+        { id: 8212, amount: 1 },
+        { id: 19911, amount: 5 },
+        { id: 8121, amount: 3 },
+        { id: 12142, amount: 0.5 },
+        { id: 2047, amount: 0.25 },
+        { id: 2050, amount: 1 }
+      ])
+    })
+    it('should return amount in recipe',() => {
+
+    })
+  })
+  describe('return ingredients needed', () => {
+
+    it('should determine amount of ingredients still needed to cook a recipe based on pantry', () => {
+      let wholeRecipeNeeded = user1Pantry.returnIngredientsNeeded(recipeData);
+      expect(wholeRecipeNeeded).to.eql([
+        {
+          "id": 12061,
+          "amount": 0.5,
+        },
+        {
+          "id": 19334,
+          "amount": 6,
+          
+        },
+        {
+          "id": 12104,
+          "amount": 0.5,
+        },
+        {
+          "id": 12115,
+          "amount": 1,
+        },
+        {
+          "id": 4047,
+          "amount": 6,
+        },
+        {
+          "id": 10019071,
+          "amount": 1,
+        },
+        {
+          "id": 8212,
+          "amount": 1,
+        },
+        {
+          "id": 19911,
+          "amount": 5,
+        },
+        {
+          "id": 8121,
+          "amount": 3,
+        },
+        {
+          "id": 12142,
+          "amount": 0.5,
+        },
+        {
+          "id": 2047,
+          "amount": 0.25,
+        },
+        {
+          "id": 2050,
+          "amount": 1,
+        }
+      ])
+    });
+    it('should return null if pantry has enough for the recipe', () => {
+      let nullTest = justinPantry.returnIngredientsNeeded(recipeData)
+      expect(nullTest).to.equal(null)
+    });
+    it('should return the amount of ingredients needed if the pantry doesnt have enough', () => {
+      let halfTest = halfUserPantry.returnIngredientsNeeded(recipeData)
+      expect(halfTest).to.eql([
+        {
+          "id": 12061,
+          "amount": 0.25,
+        },
+        {
+          "id": 19334,
+          "amount": 3,
+          
+        },
+        {
+          "id": 12104,
+          "amount": 0.25,
+        },
+        {
+          "id": 12115,
+          "amount": 0.5,
+        },
+        {
+          "id": 4047,
+          "amount": 3,
+        },
+        {
+          "id": 10019071,
+          "amount": 0.5,
+        },
+        {
+          "id": 8212,
+          "amount": 0.5,
+        },
+        {
+          "id": 19911,
+          "amount": 2.5,
+        },
+        {
+          "id": 8121,
+          "amount": 1.5,
+        },
+        {
+          "id": 12142,
+          "amount": 0.25,
+        },
+        {
+          "id": 2047,
+          "amount": 0.125,
+        },
+        {
+          "id": 2050,
+          "amount": 0.5,
+        }
+      ])
+    })
+  })
 })
