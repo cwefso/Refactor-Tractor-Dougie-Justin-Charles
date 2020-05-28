@@ -8,13 +8,17 @@ import Cookbook from './cookbook';
 import domUpdates from './domUpdates';
 
 let favButton = document.querySelector('.view-favorites');
+let savedButton = document.querySelector('.view-saved')
 let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
+let searchBar = document.querySelector('.search-input')
+let searchButton = document.querySelector('search-button')
 // let cookbook = new Cookbook(recipeData);
 let user, pantry;
 
 homeButton.addEventListener('click', cardButtonConditionals);
 favButton.addEventListener('click', viewFavorites);
+savedButton.addEventListener('click', viewSaved)
 cardArea.addEventListener('click', cardButtonConditionals);
 
 
@@ -102,14 +106,42 @@ function viewFavorites() {
       class='card'>
       <header id='${recipe.id}' class='card-header'>
       <label for='add-button' class='hidden'>Click to add recipe</label>
-      <button id='${recipe.id}' aria-label='add-button' class='add-button card-button'>
-      <img id='${recipe.id}' class='add'
-      src='https://image.flaticon.com/icons/svg/32/32339.svg' alt='Add to
-      recipes to cook'></button>
+      <button id='${recipe.id}' aria-label='add-button' class='add card-button'>
       <label for='favorite-button' class='hidden'>Click to favorite recipe
       </label>
       <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite-active card-button'>
-      </button></header>
+      </button>
+      </header>
+      <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
+      <img id='${recipe.id}' tabindex='0' class='card-picture'
+      src='${recipe.image}' alt='Food from recipe'>
+      </div>`)
+    })
+  }
+}
+
+function viewSaved() {
+  if (cardArea.classList.contains('all')) {
+    cardArea.classList.remove('all')
+  }
+  if (!user.recipesToCook.length) {
+    savedButton.innerHTML = 'You have no saved recipes!';
+    populateCards(recipeData);
+    return
+  } else {
+    savedButton.innerHTML = 'Refresh Saved Recipes'
+    cardArea.innerHTML = '';
+    user.recipesToCook.forEach(recipe => {
+      cardArea.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
+      class='card'>
+      <header id='${recipe.id}' class='card-header'>
+      <label for='add-button' class='hidden'>Click to add recipe</label>
+      <button id='${recipe.id}' aria-label='add-button' class='add add-active card-button'>
+      <label for='favorite-button' class='hidden'>Click to favorite recipe
+      </label>
+      <button id='${recipe.id}' aria-label='favorite-button' class='favorite card-button'>
+      </button>
+      </header>
       <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
       <img id='${recipe.id}' tabindex='0' class='card-picture'
       src='${recipe.image}' alt='Food from recipe'>
@@ -140,14 +172,32 @@ function favoriteCard(event) {
   }
 }
 
+function saveRecipe(event) {
+  let specificRecipe = recipeData.find(recipe => {
+    if (recipe.id  === Number(event.target.id)) {
+      return recipe;
+    }
+  })
+  if (!event.target.classList.contains('add-active')) {
+    event.target.classList.add('add-active');
+    savedButton.innerHTML = 'View Saved';
+    user.saveRecipe(specificRecipe);
+  } else if (event.target.classList.contains('add-active')) {
+    event.target.classList.remove('add-active');
+    user.removeFromSaved(specificRecipe)
+  }
+}
+
+
 function cardButtonConditionals(event) {
   if (event.target.classList.contains('favorite')) {
     favoriteCard(event);
   } else if (event.target.classList.contains('card-picture')) {
     displayDirections(event);
   } else if (event.target.classList.contains('home')) {
-    favButton.innerHTML = 'View Favorites';
     populateCards(recipeData);
+  } else if (event.target.classList.contains('add')) {
+    saveRecipe(event);
   }
 }
 
@@ -193,6 +243,14 @@ function getFavorites() {
   } else return
 }
 
+function getRecipesToCook() {
+  if (user.recipesToCook.length) {
+    user.recipesToCook.forEach(recipe => {
+      document.querySelector(`.add${recipe.id}`).classList.add('add-active')
+    })
+  } else return
+}
+
 function populateCards(recipeData) {
   cardArea.innerHTML = '';
   if (cardArea.classList.contains('all')) {
@@ -202,20 +260,31 @@ function populateCards(recipeData) {
     cardArea.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
     class='card'>
         <header id='${recipe.id}' class='card-header'>
-          <label for='add-button' class='hidden'>Click to add recipe</label>
-          <button id='${recipe.id}' aria-label='add-button' class='add-button card-button'>
-            <img id='${recipe.id} favorite' class='add'
-            src='https://image.flaticon.com/icons/svg/32/32339.svg' alt='Add to
-            recipes to cook'>
+
+          <label for='add-button' class='hidden'>Click to add recipe
+          </label>  
+          <button id='${recipe.id}' aria-label='add-button' class='add add${recipe.id} card-button'>
           </button>
+
           <label for='favorite-button' class='hidden'>Click to favorite recipe
           </label>
-          <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite${recipe.id} card-button'></button>
-        </header>
+          <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite${recipe.id} card-button'>
+          </button>
+        
+          </header>
           <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
           <img id='${recipe.id}' tabindex='0' class='card-picture'
           src='${recipe.image}' alt='click to view recipe for ${recipe.name}'>
+
     </div>`)
   })
+  getRecipesToCook();
   getFavorites();
 };
+
+          // <label for='add-button' class='hidden'>Click to add recipe</label>          
+          // <button id='${recipe.id}' aria-label='add-button' class='add-button add${recipe.id} card-button'>
+          //   <img id='${recipe.id} favorite' class='add'
+          //   src='https://image.flaticon.com/icons/svg/32/32339.svg' alt='Add to
+          //   recipes to cook'>
+          // </button>
