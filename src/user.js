@@ -37,7 +37,6 @@ class User {
     if (!this.recipesToCook.includes(recipe)) {
       this.recipesToCook.push(recipe)
     }
-    console.log("hit")
   }
   
   removeFromSaved(recipe) {
@@ -58,7 +57,6 @@ class User {
         return ingredient.name.includes(strgToSrch)
       })
     })
-  //   //search saved recipes by name or ingredient
   }
 }
 

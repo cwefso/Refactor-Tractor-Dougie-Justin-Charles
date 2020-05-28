@@ -109,6 +109,7 @@ h1 {
   background-image: url(https://image.flaticon.com/icons/svg/149/149222.svg);
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
   width: 13%;
 }
 
@@ -117,6 +118,7 @@ h1 {
   background-image: url(https://image.flaticon.com/icons/svg/32/32339.svg);
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
   width: 13%;
 }
 
@@ -169,7 +171,6 @@ h3 {
 }
 
 .recipe-name {
-
   display: block;
   font-size: 150%;
   text-align: center;
@@ -202,7 +203,6 @@ main {
 }
 
 .add-active {
-  background-image: none;
-  background-color: green($color: #43ca0d);
+  background-image: url(https://image.flaticon.com/icons/svg/1828/1828743.svg);
   background-repeat: no-repeat;
 }
