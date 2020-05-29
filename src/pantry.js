@@ -58,17 +58,22 @@ class Pantry {
     },[])
     return ingredientsNeeded[0] ? ingredientsNeeded : null
   }
-  fetchIngredientCost() {
-    const url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData";
-    return fetch(url)
-    .then(response => response.json())
-    .then(data => data.ingredientsData)
-    .catch(err => err.message);
-  }
-  returnCostToCook(recipe) {
+  // fetchIngredientCost() {
+  //  const url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData";
+  //   return fetch(url)
+  //   .then(response => response.json())
+  //   .then(data => data.ingredientsData)
+  //   .catch(err => err.message);
+  // }
+  returnCostToCook(recipe, ingredientData) {
     let ingredientsNeeded = this.returnIngredientsNeeded(recipe)
-
-
+    if(!ingredientsNeeded) return 0
+    let totalCostInCents = ingredientsNeeded.reduce((totalCost, ingredient) => {
+      let costOfIngredient = this.returnIngredient(ingredient.id, ingredientData)
+      let centsNeeded = costOfIngredient.estimatedCostInCents * ingredient.amount
+      return totalCost + centsNeeded;
+    }, 0)
+    return totalCostInCents;
   }
   addIngredientsToPantry() {}
   removeIngredientsUsed() {}
