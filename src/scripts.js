@@ -168,6 +168,7 @@ function displayDirections(event) {
   let recipeObject = new Recipe(newRecipeInfo, ingredientsData);
   let cost = recipeObject.calculateCost()
   let costInDollars = (cost / 100).toFixed(2)
+  recipeObject.getIngredientNameByID()
   cardArea.classList.add('all');
   cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
   <p class='all-recipe-info'>
@@ -182,7 +183,7 @@ function displayDirections(event) {
   recipeObject.ingredients.forEach(ingredient => {
     ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
     ${ingredient.quantity.amount.toFixed(2)} ${ingredient.quantity.unit}
-    ${ingredient.id}</li></ul>
+    ${ingredient.name}</li></ul>
     `)
   })
   recipeObject.instructions.forEach(instruction => {
