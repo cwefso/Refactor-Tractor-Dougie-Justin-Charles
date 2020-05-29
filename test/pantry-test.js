@@ -533,4 +533,15 @@ describe('Pantry', () => {
       expect(halfCost).to.equal(5715.75)
     })
   })
+  describe('cost to cook recipe', () => {
+    it('should add no ingredients to pantry if user has all ingredients', () => {
+      
+    })
+    it('should add all ingredients to pantry if user has none', () => {
+
+    })
+    it('should add half ingredients to pantry if user has none', () => {
+
+    })
+  })
 })
