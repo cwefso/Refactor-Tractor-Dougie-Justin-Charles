@@ -227,7 +227,7 @@ function displayDirections(event) {
   recipeObject.ingredients.forEach(ingredient => {
     ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
     ${ingredient.quantity.amount.toFixed(2)} ${ingredient.quantity.unit}
-    ${ingredient.name}</li></ul>
+    ${ingredient.id}</li></ul>
     `)
   })
   recipeObject.instructions.forEach(instruction => {
@@ -263,7 +263,7 @@ function populateCards(recipeData) {
     class='card'>
         <header id='${recipe.id}' class='card-header'>
           <label for='add-button' class='hidden'>Click to add recipe</label>
-          <button id='${recipe.id}' aria-label='add-button' class='add-button card-button hover-items active-items'>
+          <button id='${recipe.id}' aria-label='add-button' class='add card-button hover-items active-items'>
           </button>
           <label for='favorite-button' class='hidden'>Click to favorite recipe
           </label>
