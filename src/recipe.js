@@ -21,6 +21,17 @@ class Recipe {
     return costCounter;
   }
 
+   getIngredientNameByID() {
+    return this.ingredients.map(item => {
+      return this.ingredientsData.forEach(ingredient => {
+        if (item.id === ingredient.id) {
+          item.name = ingredient.name
+        }
+      })
+    })
+  }
+
+
   filterRecipes() {
     //user should be able to filter recipes by tag
   }
