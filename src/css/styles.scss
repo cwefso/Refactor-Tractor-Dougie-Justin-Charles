@@ -89,18 +89,6 @@ h1 {
   margin: 3px;
 }
 
-
-
-.add-button {
-  background-color: $light-green;
-  display: flex;
-  width: 12%;
-}
-
-.add {
-  width: 100%;
-}
-
 .hidden {
   display: none;
 }
@@ -111,6 +99,16 @@ h1 {
   background-image: url(https://image.flaticon.com/icons/svg/149/149222.svg);
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
+  width: 13%;
+}
+
+.add {
+  background-color: #EBF5EE;
+  background-image: url(https://image.flaticon.com/icons/svg/32/32339.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   width: 13%;
 }
 
@@ -185,5 +183,10 @@ main {
 
 .favorite-active {
   background-image: url(https://image.flaticon.com/icons/svg/148/148841.svg);
+  background-repeat: no-repeat;
+}
+
+.add-active {
+  background-image: url(https://image.flaticon.com/icons/svg/1828/1828743.svg);
   background-repeat: no-repeat;
 }
