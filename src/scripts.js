@@ -1,79 +1,34 @@
 import './css/base.scss';
 import './css/styles.scss';
-
+import data from './fetch';
 import Pantry from './pantry';
 import Recipe from './recipe';
 import User from './user';
 import Cookbook from './cookbook';
 import domUpdates from './domUpdates';
 
-let favButton = document.querySelector('.view-favorites');
-let savedButton = document.querySelector('.view-saved')
-let homeButton = document.querySelector('.home')
-let cardArea = document.querySelector('.all-cards');
-let searchBar = document.querySelector('.search-input')
-let searchButton = document.querySelector('search-button')
+const favButton = document.querySelector('.view-favorites');
+const savedButton = document.querySelector('.view-saved')
+const homeButton = document.querySelector('.home')
+const cardArea = document.querySelector('.all-cards');
+const searchBar = document.querySelector('.search-input')
+const searchButton = document.querySelector('search-button')
 // let cookbook = new Cookbook(recipeData);
 let user, pantry;
+
+let ingredientsData
+let recipeData
+let users
 
 homeButton.addEventListener('click', cardButtonConditionals);
 favButton.addEventListener('click', viewFavorites);
 savedButton.addEventListener('click', viewSaved)
 cardArea.addEventListener('click', cardButtonConditionals);
 
-
-var usersUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'
-var users
-
-function getUsersData() {
-  return fetch(usersUrl)
-    .then(res => {
-      return res.json()
-    })
-    .then(data => {
-      return data.wcUsersData
-    })
-    .catch(err => {
-      console.log(err.message)
-    })
-}
-
-var indredientsUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData'
-var ingredientsData
-
-function getIngredientsData() {
-  return fetch(indredientsUrl)
-    .then(res => {
-      return res.json()
-    })
-    .then(data => {
-      return data.ingredientsData
-    })
-    .catch(err => {
-      console.log(err.message)
-    })
-}
-
-var recipesUrl = 'https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData'
-var recipeData
-
-function getRecipeData() {
-  return fetch(recipesUrl)
-    .then(res => {
-      return res.json()
-    })
-    .then(data => {
-      return data.recipeData
-    })
-    .catch(err => {
-      console.log(err.message)
-    })
-}
-
 const getData = async() => {
-  users = await getUsersData()
-  recipeData = await getRecipeData()
-  ingredientsData = await getIngredientsData()
+  users = await data.getUsersData()
+  recipeData = await data.getRecipeData()
+  ingredientsData = await data.getIngredientsData()
   onStartup()
 }
 
@@ -213,6 +168,7 @@ function displayDirections(event) {
   let recipeObject = new Recipe(newRecipeInfo, ingredientsData);
   let cost = recipeObject.calculateCost()
   let costInDollars = (cost / 100).toFixed(2)
+  recipeObject.getIngredientNameByID()
   cardArea.classList.add('all');
   cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
   <p class='all-recipe-info'>
@@ -227,7 +183,7 @@ function displayDirections(event) {
   recipeObject.ingredients.forEach(ingredient => {
     ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
     ${ingredient.quantity.amount.toFixed(2)} ${ingredient.quantity.unit}
-    ${ingredient.id}</li></ul>
+    ${ingredient.name}</li></ul>
     `)
   })
   recipeObject.instructions.forEach(instruction => {
