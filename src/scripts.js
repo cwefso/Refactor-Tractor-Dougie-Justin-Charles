@@ -12,7 +12,7 @@ const savedButton = document.querySelector('.view-saved')
 const homeButton = document.querySelector('.home')
 const cardArea = document.querySelector('.all-cards');
 const searchBar = document.querySelector('.search-input')
-const searchButton = document.querySelector('search-button')
+const searchButton = document.querySelector('.search-button')
 let user, pantry;
 
 let ingredientsData
@@ -23,6 +23,7 @@ homeButton.addEventListener('click', cardButtonConditionals);
 favButton.addEventListener('click', viewFavorites);
 savedButton.addEventListener('click', viewSaved)
 cardArea.addEventListener('click', cardButtonConditionals);
+searchButton.addEventListener('click', searchCards)
 
 const getData = async() => {
   users = await data.getUsersData()
@@ -141,6 +142,20 @@ function displayDirections(event) {
   })
 }
 
+function makeRecipes() {
+  let named = recipeData.forEach(item => {
+    let newRecipe = new Recipe(item, ingredientsData)
+    newRecipe.getIngredientNameByID()
+  })
+  return named
+}
+
+function searchCards(e) {
+  e.preventDefault()
+  let searched = user.findRecipe(searchBar.value, recipeData)
+  populateCards(searched)
+}
+
 function populateCards(recipeData) {
   cardArea.innerHTML = '';
   if (cardArea.classList.contains('all')) {
@@ -163,4 +178,5 @@ function populateCards(recipeData) {
 
     </div>`)
   })
+  makeRecipes()
 };
