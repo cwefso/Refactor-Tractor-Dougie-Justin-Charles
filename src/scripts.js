@@ -113,48 +113,31 @@ function greetUser() {
   user.name.split(' ')[0] + ' ' + user.name.split(' ')[1][0];
 }
 
-function favoriteCard(event) {
+function addCardToList(event, toggle, list, words) {
   let specificRecipe = recipeData.find(recipe => {
     if (recipe.id  === Number(event.target.id)) {
       return recipe;
     }
   })
-  if (!event.target.classList.contains('favorite-active')) {
-    event.target.classList.add('favorite-active');
-    favButton.innerHTML = 'View Favorites';
-    user.addToFavorites(specificRecipe);
-  } else if (event.target.classList.contains('favorite-active')) {
-    event.target.classList.remove('favorite-active');
-    user.removeFromFavorites(specificRecipe)
+  if (!event.target.classList.contains(toggle)) {
+    event.target.classList.add(toggle);
+    favButton.innerHTML = words;
+    user.addToList(specificRecipe, list);
+  } else if (event.target.classList.contains(toggle)) {
+    event.target.classList.remove(toggle);
+    user.removeFromList(specificRecipe, list)
   }
 }
-
-function saveRecipe(event) {
-  let specificRecipe = recipeData.find(recipe => {
-    if (recipe.id  === Number(event.target.id)) {
-      return recipe;
-    }
-  })
-  if (!event.target.classList.contains('add-active')) {
-    event.target.classList.add('add-active');
-    savedButton.innerHTML = 'View Saved';
-    user.saveRecipe(specificRecipe);
-  } else if (event.target.classList.contains('add-active')) {
-    event.target.classList.remove('add-active');
-    user.removeFromSaved(specificRecipe)
-  }
-}
-
 
 function cardButtonConditionals(event) {
   if (event.target.classList.contains('favorite')) {
-    favoriteCard(event);
+    addCardToList(event, 'favorite-active', user.favoriteRecipes, 'View Favorites');
   } else if (event.target.classList.contains('card-picture')) {
     displayDirections(event);
   } else if (event.target.classList.contains('home')) {
     populateCards(recipeData);
   } else if (event.target.classList.contains('add')) {
-    saveRecipe(event);
+    addCardToList(event, 'add-active', user.recipesToCook, 'View Saved');
   }
 }
 
