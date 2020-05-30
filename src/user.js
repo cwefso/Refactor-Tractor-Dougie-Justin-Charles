@@ -25,10 +25,11 @@ class User {
   }
 
   findRecipe(strgToSrch, arrayToSearch) {
+    let smallString = strgToSrch.toLowerCase()
     return arrayToSearch.filter(recipe => {
-      return recipe.name.includes(strgToSrch)
+      return recipe.name.toLowerCase().includes(smallString)
       || recipe.ingredients.find(ingredient => {
-        return ingredient.name.includes(strgToSrch)
+        return ingredient.name.toLowerCase().includes(smallString)
       })
     })
   }

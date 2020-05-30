@@ -13,8 +13,8 @@ const homeButton = document.querySelector('.home')
 const cardArea = document.querySelector('.all-cards');
 const searchBar = document.querySelector('.search-input')
 const searchButton = document.querySelector('.search-button')
-let user, pantry;
 
+let user, pantry;
 let ingredientsData
 let recipeData
 let users
@@ -23,7 +23,7 @@ homeButton.addEventListener('click', cardButtonConditionals);
 favButton.addEventListener('click', viewFavorites);
 savedButton.addEventListener('click', viewSaved)
 cardArea.addEventListener('click', cardButtonConditionals);
-searchButton.addEventListener('click', searchCards)
+searchButton.addEventListener('click', searchCards);
 
 const getData = async() => {
   users = await data.getUsersData()
@@ -46,30 +46,26 @@ function onStartup() {
 }
 
 function viewFavorites() {
-  if (cardArea.classList.contains('all')) {
-    cardArea.classList.remove('all')
-  }
   if (!user.favoriteRecipes.length) {
     favButton.innerHTML = 'You have no favorites!';
     return
   } else {
     favButton.innerHTML = 'Refresh Favorites'
     cardArea.innerHTML = '';
-    populateCards(user.favoriteRecipes);
+    recipeData = user.favoriteRecipes
+    populateCards(recipeData);
   }
 }
 
 function viewSaved() {
-  if (cardArea.classList.contains('all')) {
-    cardArea.classList.remove('all')
-  }
   if (!user.recipesToCook.length) {
     savedButton.innerHTML = 'You have no saved recipes!';
     return
   } else {
     savedButton.innerHTML = 'Refresh Saved Recipes'
     cardArea.innerHTML = '';
-    populateCards(user.recipesToCook);
+    recipeData = user.recipesToCook
+    populateCards(recipeData);
   }
 }
 
@@ -101,7 +97,7 @@ function cardButtonConditionals(event) {
   } else if (event.target.classList.contains('card-picture')) {
     displayDirections(event);
   } else if (event.target.classList.contains('home')) {
-    populateCards(recipeData);
+    getData();
   } else if (event.target.classList.contains('add')) {
     addCardToList(event, 'add-active', user.recipesToCook, 'View Saved', savedButton);
   }
@@ -161,6 +157,7 @@ function populateCards(recipeData) {
   if (cardArea.classList.contains('all')) {
     cardArea.classList.remove('all')
   }
+  searchBar.value = '';
   recipeData.forEach(recipe => {
     cardArea.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
     class='card'>
