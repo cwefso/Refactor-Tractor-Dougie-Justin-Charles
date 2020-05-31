@@ -8,20 +8,27 @@ const savedButton = document.querySelector('.view-saved')
 const homeButton = document.querySelector('.home')
 const cardArea = document.querySelector('.all-cards');
 const searchBar = document.querySelector('.search-input')
-const searchButton = document.querySelector('search-button')
+const searchButton = document.querySelector('.search-button')
 let user, pantry;
+
 
 let ingredientsData
 let recipeData
 let users
 
-let domUpdates = {
+
+class DomUpdates {
+  constructor(user, pantry) {
+    this.user = user    
+    this.pantry = pantry
+  }
+  
   async getData() {
-      users = await data.getUsersData()
-      recipeData = await data.getRecipeData()
-      ingredientsData = await data.getIngredientsData()
-      this.onStartup()
-  },
+    users = await data.getUsersData()
+    recipeData = await data.getRecipeData()
+    ingredientsData = await data.getIngredientsData()
+    this.onStartup()
+  }
 
   onStartup(){
     let userId = (Math.floor(Math.random() * 49) + 1)
@@ -30,9 +37,9 @@ let domUpdates = {
     });
     user = new User(newUser)
     pantry = new Pantry(newUser.pantry)
-    domUpdates.populateCards(recipeData);
-    domUpdates.greetUser();
-  },
+    this.populateCards(recipeData);
+    this.greetUser();
+  }
 
   populateCards(recipeData) {
     cardArea.innerHTML = '';
@@ -54,13 +61,13 @@ let domUpdates = {
             <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
             <img id='${recipe.id}' tabindex='0' class='card-picture'
             src='${recipe.image}' alt='click to view recipe for ${recipe.name}'>
-  
+
       </div>`)
     })
     this.makeRecipes()
-  },
+  }
 
-  
+
   viewFavorites() {
     if (!user.favoriteRecipes.length) {
       favButton.innerHTML = 'You have no favorites!';
@@ -69,10 +76,10 @@ let domUpdates = {
       favButton.innerHTML = 'Refresh Favorites'
       cardArea.innerHTML = '';
       recipeData = user.favoriteRecipes
-      domUpdates.populateCards(recipeData);
+      this.populateCards(recipeData);
     }
-  }, 
-  
+  }
+
   viewSaved() {
     if (!user.recipesToCook.length) {
       savedButton.innerHTML = 'You have no saved recipes!';
@@ -81,15 +88,15 @@ let domUpdates = {
       savedButton.innerHTML = 'Refresh Saved Recipes'
       cardArea.innerHTML = '';
       recipeData = user.recipesToCook
-      domUpdates.populateCards(recipeData);
+      this.populateCards(recipeData);
     }
-  },
-  
+  }
+
   greetUser() {
     const userName = document.querySelector('.user-name');
     userName.innerHTML =
     user.name.split(' ')[0] + ' ' + user.name.split(' ')[1][0];
-  },
+  }
 
   addCardToList(event, toggle, list, words, button) {
     let specificRecipe = recipeData.find(recipe => {
@@ -105,19 +112,20 @@ let domUpdates = {
       event.target.classList.remove(toggle);
       user.removeFromList(specificRecipe, list)
     }
-  },
-
+  }
+  
   cardButtonConditionals(event) {
     if (event.target.classList.contains('favorite')) {
-      domUpdates.addCardToList(event, 'favorite-active', user.favoriteRecipes, 'View Favorites', favButton);
+      DomUpdates.addCardToList(event, 'favorite-active', user.favoriteRecipes, 'View Favorites', favButton);
     } else if (event.target.classList.contains('card-picture')) {
-      domUpdates.displayDirections(event);
+      DomUpdates.displayDirections(event);
     } else if (event.target.classList.contains('home')) {
+      console.log(DomUpdates)
       domUpdates.getData();
     } else if (event.target.classList.contains('add')) {
-      domUpdates.addCardToList(event, 'add-active', user.recipesToCook, 'View Saved', savedButton);
+      DomUpdates.addCardToList(event, 'add-active', user.recipesToCook, 'View Saved', savedButton);
     }
-  },
+  }
 
   displayDirections(event) {
     let newRecipeInfo = recipeData.find(recipe => {
@@ -151,7 +159,7 @@ let domUpdates = {
       ${instruction.instruction}</li>
       `)
     })
-  },
+  }
 
   makeRecipes() {
     let named = recipeData.forEach(item => {
@@ -159,14 +167,14 @@ let domUpdates = {
       newRecipe.getIngredientNameByID()
     })
     return named
-  },
-  
-  searchCards(e) {
-    e.preventDefault()
-    let searched = user.findRecipe(searchBar.value, recipeData)
-    domUpdates.populateCards(searched)
   }
 
-};
+  searchCards() {
+    let searched = user.findRecipe(searchBar.value, recipeData)
+    this.populateCards(searched);
+  }
+}
 
-export default  domUpdates;
+
+
+export default DomUpdates;
