@@ -28,32 +28,52 @@ describe('User', () => {
   });
 
   it('Should be able to add recipes to favoriteRecipes', () =>{
-    user1.addToFavorites(recipeData[0])
+    user1.addToList(recipeData[0], user1.favoriteRecipes)
     expect(user1.favoriteRecipes.includes(recipeData[0])).to.eql(true);
   });
 
   it('Should be able to remove recipes from favoriteRecipes', () =>{
-    user1.removeFromFavorites(recipeData);
+    user1.removeFromList(recipeData, user1.favoriteRecipes);
     expect(user1.favoriteRecipes).to.eql([]);
   });
 
   it('Should be able to filter through favoriteRecipes by tag', () => {
-    user1.addToFavorites(recipeData[0]);
-    user1.addToFavorites(recipeData[1]);
-    expect(user1.filterFavorites('antipasti')).to.eql([recipeData[0]]);
+    user1.addToList(recipeData[0], user1.favoriteRecipes);
+    user1.addToList(recipeData[1], user1.favoriteRecipes);
+    expect(user1.filterRecipes('antipasti', user1.favoriteRecipes)).to.eql([recipeData[0]]);
   });
 
   it('Should be able to search favoriteRecipes by name or ingredient', () => {
-    user1.addToFavorites(recipeData[0]);
-    user1.addToFavorites(recipeData[1]);
-    expect(user1.findFavorites('egg')).to.eql([recipeData[0]]);
+    user1.addToList(recipeData[0], user1.favoriteRecipes);
+    user1.addToList(recipeData[1], user1.favoriteRecipes);
+    expect(user1.findRecipe('egg', user1.favoriteRecipes)).to.eql([recipeData[0]]);
   });
 
-  it('Should be able to check ingredients in User/s pantry for a given recipe', () => {
-    expect(user1.checkPantry(recipeIngredients)).to.eql('You have the ingredients!');
+  it('Should be return empty array if no success in searching favoriteRecipes by name or ingredient', () => {
+    user1.addToList(recipeData[0], user1.favoriteRecipes);
+    user1.addToList(recipeData[1], user1.favoriteRecipes);
+    expect(user1.findRecipe('sawdust', user1.favoriteRecipes)).to.eql([]);
   });
 
-  it('Should inform User if they lack required ingredients for a given recipe', () => {
-    expect(user1.checkPantry(recipeIngredients)).to.eql(missingIngredientsWithPrice);
+  it('Should be able to add recipes to recipesToCook', () =>{
+    user1.addToList(recipeData[0], user1.recipesToCook)
+    expect(user1.recipesToCook.includes(recipeData[0])).to.eql(true);
+  });
+
+  it('Should be able to remove recipes from recipesToCook', () =>{
+    user1.removeFromList(recipeData, user1.favoriteRecipes);
+    expect(user1.favoriteRecipes).to.eql([]);
+  });
+
+  it('Should be able to filter through recipesToCook by tag', () => {
+    user1.addToList(recipeData[0], user1.recipesToCook);
+    user1.addToList(recipeData[1], user1.recipesToCook);
+    expect(user1.filterRecipes('antipasti', user1.recipesToCook)).to.eql([recipeData[0]]);
+  });
+
+  it('Should be able to search recipesToCook by name or ingredient', () => {
+    user1.addToList(recipeData[0], user1.recipesToCook);
+    user1.addToList(recipeData[1], user1.recipesToCook);
+    expect(user1.findRecipe('egg', user1.recipesToCook)).to.eql([recipeData[0]]);
   });
 });
