@@ -69,7 +69,7 @@ let domUpdates = {
       favButton.innerHTML = 'Refresh Favorites'
       cardArea.innerHTML = '';
       recipeData = user.favoriteRecipes
-      this.populateCards(recipeData);
+      domUpdates.populateCards(recipeData);
     }
   }, 
   
@@ -81,7 +81,7 @@ let domUpdates = {
       savedButton.innerHTML = 'Refresh Saved Recipes'
       cardArea.innerHTML = '';
       recipeData = user.recipesToCook
-      this.populateCards(recipeData);
+      domUpdates.populateCards(recipeData);
     }
   },
   
@@ -100,7 +100,6 @@ let domUpdates = {
     if (!event.target.classList.contains(toggle)) {
       event.target.classList.add(toggle);
       button.innerHTML = words;
-      console.log(user)
       user.addToList(specificRecipe, list);
     } else if (event.target.classList.contains(toggle)) {
       event.target.classList.remove(toggle);
