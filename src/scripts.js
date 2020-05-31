@@ -15,4 +15,6 @@ savedButton.addEventListener('click', domUpdates.viewSaved)
 cardArea.addEventListener('click', domUpdates.cardButtonConditionals);
 searchButton.addEventListener('click', domUpdates.searchCards);
 
+
+
 window.onload = domUpdates.getData()

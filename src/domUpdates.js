@@ -164,7 +164,7 @@ let domUpdates = {
   searchCards(e) {
     e.preventDefault()
     let searched = user.findRecipe(searchBar.value, recipeData)
-    this.populateCards(searched)
+    domUpdates.populateCards(searched)
   }
 
 };
