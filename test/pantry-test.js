@@ -2,6 +2,7 @@ const chai = require('chai');
 const expect = chai.expect;
 import User from '../src/user.js';
 import Pantry from '../src/pantry.js';
+const fetch = require("node-fetch")
 
 // const Ingredients = require('../src/ingredients.js');
 let userData
@@ -300,9 +301,9 @@ describe('Pantry', () => {
     user1 = new User(userData);
     justin = new User(userData2);
     halfUser = new User(halfUserData);
-    user1Pantry = new Pantry(user1);
-    justinPantry = new Pantry(justin);
-    halfUserPantry = new Pantry(halfUser);
+    user1Pantry = new Pantry(user1, user1.id);
+    justinPantry = new Pantry(justin, justin.id);
+    halfUserPantry = new Pantry(halfUser, halfUser.id);
   })
   it('should be a function', () => {
     expect(Pantry).to.be.a('function');

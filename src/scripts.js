@@ -40,7 +40,7 @@ function onStartup() {
     return user.id === Number(userId);
   });
   user = new User(newUser)
-  pantry = new Pantry(newUser.pantry)
+  pantry = new Pantry(newUser.pantry, newUser.id)
   populateCards(recipeData);
   greetUser();
 }

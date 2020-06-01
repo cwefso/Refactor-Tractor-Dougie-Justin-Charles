@@ -1,7 +1,7 @@
-const fetch = require('node-fetch')
+const fetch = require("node-fetch")
 class Pantry {
-  constructor(userData) { 
-    this.id = userData.id   
+  constructor(userData, id) {  
+    this.id = id  
     this.contents = typeof userData === "object" ? userData.pantry : null;
   }
 
@@ -80,7 +80,7 @@ class Pantry {
 
   postToPantry(ingredientId, modificationNum) {
     let url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData"
-    fetch(url, {
+    return fetch(url, {
       method: "post",
       headers: {
         'Accept': 'application/json',
