@@ -2,7 +2,7 @@ const chai = require('chai');
 const expect = chai.expect;
 import User from '../src/user.js';
 import Pantry from '../src/pantry.js';
-const fetch = require("node-fetch")
+
 
 // const Ingredients = require('../src/ingredients.js');
 let userData

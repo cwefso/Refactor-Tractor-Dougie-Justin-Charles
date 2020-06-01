@@ -1,4 +1,3 @@
-const fetch = require("node-fetch")
 class Pantry {
   constructor(userData, id) {  
     this.id = id  
@@ -132,7 +131,9 @@ class Pantry {
 
     // (and keep this up to date with the database via fetch)
   }
-  removeIngredientsUsed() {}
+  removeIngredientsUsed(recipe) {
+    // remove the ingredients used in a recipe from the users pantry
+  }
 }
 
 
