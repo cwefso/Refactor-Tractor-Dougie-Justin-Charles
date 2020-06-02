@@ -122,13 +122,14 @@ class Pantry {
       let inPantry = this.returnIngredient(ingredient.id, this.pantry);
       let amountOfModification = inPantry.amount + ingredient.amount
       if(inPantry) { 
-        amountOfModification 
-        z
-       } else {
-         this.contents.push(ingredient)
-       }
+        amountOfModification
+        this.postToPantry(ingredient.id, amountOfModification)
+        
+      } else {
+        this.contents.push(ingredient)
+        this.postToPantry(ingredient.id, ingredient.amount)
+      }
     })
-    this.postToPantry(ingredientsNeeded)
     // call the method that get the ingredients still needed
     // add those amounts to the pantry
     // if the ingredient is in the pantry, then just add the amounts to whats there
