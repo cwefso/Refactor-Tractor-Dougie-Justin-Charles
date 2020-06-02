@@ -1,4 +1,3 @@
-const fetch = require("node-fetch")
 class Pantry {
   constructor(userData, id) {  
     this.id = id  
@@ -121,7 +120,13 @@ class Pantry {
     let ingredientsNeeded = this.returnIngredientsNeeded(recipe)
     ingredientsNeeded.forEach(ingredient => {
       let inPantry = this.returnIngredient(ingredient.id, this.pantry);
-      inPantry ? (inPantry.amount + ingredient.amount) : this.contents.push(ingredient)
+      let amountOfModification = inPantry.amount + ingredient.amount
+      if(inPantry) { 
+        amountOfModification 
+        z
+       } else {
+         this.contents.push(ingredient)
+       }
     })
     this.postToPantry(ingredientsNeeded)
     // call the method that get the ingredients still needed
