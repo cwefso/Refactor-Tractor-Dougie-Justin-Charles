@@ -79,7 +79,7 @@ class Pantry {
 
   postToPantry(ingredientId, modificationNum) {
     let url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData"
-    return fetch(url , {
+      return fetch(url , {
       method: "post",
       headers: {
         'Accept': 'application/json',
@@ -122,7 +122,7 @@ class Pantry {
       let inPantry = this.returnIngredient(ingredient.id, this.pantry);
       let amountOfModification = inPantry.amount + ingredient.amount
       if(inPantry) { 
-        amountOfModification
+        ingredient.amount = amountOfModification
         this.postToPantry(ingredient.id, amountOfModification)
         
       } else {

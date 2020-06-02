@@ -560,7 +560,12 @@ describe('Pantry', () => {
   })
   describe('chai spies', () => {
     beforeEach(() => {
-      chai.spy.on(Pantry)
+      chai.spy.on(Pantry, 'postToPantry', () => {})
+      
+    })
+    it('should call post to pantry item __ times', () => {
+      justinPantry.postToPantry(12345, 4)
+      expect(justinPantry.postToPantry).to.have.been.called(1)
     })
   })
 
