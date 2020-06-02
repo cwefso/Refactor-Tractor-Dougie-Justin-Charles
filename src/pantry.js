@@ -88,8 +88,6 @@ class Pantry {
         'Content-Type': 'application/json',
         'Content-Length': '75'
       },
-
-    //make sure to serialize your JSON body
       body: JSON.stringify({
         "userID" : this.id,
         "ingredientID" : ingredientId,
@@ -104,9 +102,6 @@ class Pantry {
       let err = JSON.parse(error);
       console.error(err)
     })
-      // take ingredient list or pantry/ 
-
-    
     /*
     POST /api/v1/whats-cookin/1911/users/wcUsersData/?userID=1 HTTP/1.1
     Host: fe-apps.herokuapp.com
