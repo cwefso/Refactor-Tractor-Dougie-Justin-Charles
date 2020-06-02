@@ -1,5 +1,6 @@
 class Pantry {
-  constructor(userData) {    
+  constructor(userData, id) {  
+    this.id = id  
     this.contents = typeof userData === "object" ? userData.pantry : null;
   }
 
@@ -50,9 +51,7 @@ class Pantry {
       let pantryIngredient = this.returnIngredient(recipeIngredient.id, filteredPantry)
       if(pantryIngredient) {
         let amountNeeded = recipeIngredient.amount -= pantryIngredient.amount
-        if(amountNeeded > 0) {
-          totalNeeded.push(recipeIngredient)
-        }
+        if(amountNeeded > 0) totalNeeded.push(recipeIngredient)
       } else {
         totalNeeded.push(recipeIngredient)
       }
@@ -60,9 +59,81 @@ class Pantry {
     },[])
     return ingredientsNeeded[0] ? ingredientsNeeded : null
   }
-  returnCostToCookRecipe(recipe) {}
-  addIngredientsToPantry() {}
-  removeIngredientsUsed() {}
+  // fetchIngredientCost() {
+  //  const url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData";
+  //   return fetch(url)
+  //   .then(response => response.json())
+  //   .then(data => data.ingredientsData)
+  //   .catch(err => err.message);
+  // }
+  returnCostToCook(recipe, ingredientData) {
+    let ingredientsNeeded = this.returnIngredientsNeeded(recipe)
+    if(!ingredientsNeeded) return 0
+    let totalCostInCents = ingredientsNeeded.reduce((totalCost, ingredient) => {
+      let costOfIngredient = this.returnIngredient(ingredient.id, ingredientData)
+      let centsNeeded = costOfIngredient.estimatedCostInCents * ingredient.amount
+      return totalCost + centsNeeded;
+    }, 0)
+    return totalCostInCents;
+  }
+
+  postToPantry(ingredientId, modificationNum) {
+    let url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData"
+    return fetch(url, {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Host': 'fe-apps.herokuapp.com',
+        'Content-Type': 'application/json',
+        'Content-Length': '75'
+      },
+
+    //make sure to serialize your JSON body
+      body: JSON.stringify({
+        "userID" : this.id,
+        "ingredientID" : ingredientId,
+        "ingredientModification": modificationNum
+      })
+    })
+    .then( (response) => { 
+    //do something awesome that makes the world a better place
+    });
+      // take ingredient list or pantry/ 
+
+    
+    /*
+    POST /api/v1/whats-cookin/1911/users/wcUsersData/?userID=1 HTTP/1.1
+    Host: fe-apps.herokuapp.com
+    Content-Type: application/json
+    Content-Length: 75
+
+{
+  "userID" : 1,
+  "ingredientID" : 18371,
+  "ingredientModification": 7
+}
+    */
+  }
+  addIngredientsToPantry(recipe) {
+    // Add the necessary ingredients to my pantry
+    let ingredientsNeeded = this.returnIngredientsNeeded(recipe)
+    ingredientsNeeded.forEach(ingredient => {
+      let inPantry = this.returnIngredient(ingredient.id, this.pantry);
+      inPantry ? (inPantry.amount + ingredient.amount) : this.contents.push(ingredient)
+    })
+    this.postToPantry(ingredientsNeeded)
+    // call the method that get the ingredients still needed
+    // add those amounts to the pantry
+    // if the ingredient is in the pantry, then just add the amounts to whats there
+    // if not then add that ingredient to the pantry
+    // post the new pantry to the api using fetch
+
+    // (and keep this up to date with the database via fetch)
+  }
+  removeIngredientsUsed(recipe) {
+    // remove the ingredients used in a recipe from the users pantry
+  }
 }
 
 

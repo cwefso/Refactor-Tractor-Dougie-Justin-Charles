@@ -3,6 +3,7 @@ const expect = chai.expect;
 import User from '../src/user.js';
 import Pantry from '../src/pantry.js';
 
+
 // const Ingredients = require('../src/ingredients.js');
 let userData
 let user1;
@@ -14,6 +15,7 @@ let recipeData
 let halfUser
 let halfUserData
 let halfUserPantry
+let costData
 
 describe('Pantry', () => {
   beforeEach(() => {
@@ -282,12 +284,26 @@ describe('Pantry', () => {
         "side dish"
       ]
     },
+    costData = [
+      { id: 19334, name: 'brown sugar', estimatedCostInCents: 559 },
+      { id: 2047, name: 'salt', estimatedCostInCents: 280 },
+      { id: 2050, name: 'vanilla', estimatedCostInCents: 926 },
+      { id: 19911, name: 'maple', estimatedCostInCents: 349 },
+      { id: 12061, name: 'whole almonds', estimatedCostInCents: 1029 },
+      { id: 12104, name: 'coconut', estimatedCostInCents: 918 },
+      { id: 12115, name: 'coconut cream', estimatedCostInCents: 304 },
+      { id: 4047, name: 'coconut oil', estimatedCostInCents: 152 },
+      { id: 10019071, name: 'dark chocolate morsels', estimatedCostInCents: 632},
+      { id: 8212, name: 'granola cereal', estimatedCostInCents: 381 },
+      { id: 8121, name: 'oatmeal', estimatedCostInCents: 659 },
+      { id: 12142, name: 'pecan', estimatedCostInCents: 314 }
+    ]
     user1 = new User(userData);
     justin = new User(userData2);
     halfUser = new User(halfUserData);
-    user1Pantry = new Pantry(user1);
-    justinPantry = new Pantry(justin);
-    halfUserPantry = new Pantry(halfUser);
+    user1Pantry = new Pantry(user1, user1.id);
+    justinPantry = new Pantry(justin, justin.id);
+    halfUserPantry = new Pantry(halfUser, halfUser.id);
   })
   it('should be a function', () => {
     expect(Pantry).to.be.a('function');
@@ -506,10 +522,27 @@ describe('Pantry', () => {
   })
   describe('cost to cook recipe', () => {
     it('should return 0 if pantry has all ingredients', () => {
-      let noCost = justinPantry.returnCostToCook(recipeData);
-      expect(recipeData).to.equal(0)
+      let noCost = justinPantry.returnCostToCook(recipeData, costData);
+      expect(noCost).to.equal(0)
     })
-    it.skip('should return the cost of the whole recipe if pantry has no ingredients', () => {})
-    it.skip('should return cost if user has half the amount of ingredients in pantry', () => {})
+    it('should return the cost of the whole recipe if pantry has no ingredients', () => {
+      let allCost = user1Pantry.returnCostToCook(recipeData, costData);
+      expect(allCost).to.equal(11431.5)
+    })
+    it('should return cost if user has half the amount of ingredients in pantry', () => {
+      let halfCost = halfUserPantry.returnCostToCook(recipeData, costData);
+      expect(halfCost).to.equal(5715.75)
+    })
+  })
+  describe('cost to cook recipe', () => {
+    it('should add no ingredients to pantry if user has all ingredients', () => {
+      
+    })
+    it('should add all ingredients to pantry if user has none', () => {
+
+    })
+    it('should add half ingredients to pantry if user has none', () => {
+
+    })
   })
 })
