@@ -22,7 +22,7 @@ let DomUpdates = {
   //   DomUpdates.user = user    
   //   DomUpdates.pantry = pantry
   // }
-  
+
   async getData() {
     users = await data.getUsersData()
     recipeData = await data.getRecipeData()
@@ -75,8 +75,8 @@ let DomUpdates = {
     } else {
       favButton.innerHTML = 'Refresh Favorites'
       cardArea.innerHTML = '';
-      recipeData = user.favoriteRecipes
-      DomUpdates.populateCards(recipeData);
+      // recipeData = user.favoriteRecipes
+      DomUpdates.populateCards(user.favoriteRecipes);
     }
   },
 
@@ -87,8 +87,8 @@ let DomUpdates = {
     } else {
       savedButton.innerHTML = 'Refresh Saved Recipes'
       cardArea.innerHTML = '';
-      recipeData = user.recipesToCook
-      DomUpdates.populateCards(recipeData);
+      // recipeData = user.recipesToCook
+      DomUpdates.populateCards(user.recipesToCook);
     }
   },
 
@@ -120,8 +120,10 @@ let DomUpdates = {
     } else if (event.target.classList.contains('card-picture')) {
       DomUpdates.displayDirections(event);
     } else if (event.target.classList.contains('home')) {
-      console.log(DomUpdates)
-      DomUpdates.getData();
+      // console.log(DomUpdates)
+      // DomUpdates.getData();
+      console.log(recipeData)
+      DomUpdates.populateCards(recipeData)
     } else if (event.target.classList.contains('add')) {
       DomUpdates.addCardToList(event, 'add-active', user.recipesToCook, 'View Saved', savedButton);
     }
