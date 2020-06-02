@@ -17,18 +17,18 @@ let recipeData
 let users
 
 
-class DomUpdates {
-  constructor(user, pantry) {
-    this.user = user    
-    this.pantry = pantry
-  }
+let DomUpdates = {
+  // constructor(user, pantry) {
+  //   DomUpdates.user = user    
+  //   DomUpdates.pantry = pantry
+  // }
   
   async getData() {
     users = await data.getUsersData()
     recipeData = await data.getRecipeData()
     ingredientsData = await data.getIngredientsData()
-    this.onStartup()
-  }
+    DomUpdates.onStartup()
+  },
 
   onStartup(){
     let userId = (Math.floor(Math.random() * 49) + 1)
@@ -37,9 +37,9 @@ class DomUpdates {
     });
     user = new User(newUser)
     pantry = new Pantry(newUser.pantry, newUser.id)
-    this.populateCards(recipeData);
-    this.greetUser();
-  }
+    DomUpdates.populateCards(recipeData);
+    DomUpdates.greetUser();
+  },
 
   populateCards(recipeData) {
     cardArea.innerHTML = '';
@@ -64,8 +64,8 @@ class DomUpdates {
 
       </div>`)
     })
-    this.makeRecipes()
-  }
+    DomUpdates.makeRecipes()
+  },
 
 
   viewFavorites() {
@@ -76,9 +76,9 @@ class DomUpdates {
       favButton.innerHTML = 'Refresh Favorites'
       cardArea.innerHTML = '';
       recipeData = user.favoriteRecipes
-      this.populateCards(recipeData);
+      DomUpdates.populateCards(recipeData);
     }
-  }
+  },
 
   viewSaved() {
     if (!user.recipesToCook.length) {
@@ -88,15 +88,15 @@ class DomUpdates {
       savedButton.innerHTML = 'Refresh Saved Recipes'
       cardArea.innerHTML = '';
       recipeData = user.recipesToCook
-      this.populateCards(recipeData);
+      DomUpdates.populateCards(recipeData);
     }
-  }
+  },
 
   greetUser() {
     const userName = document.querySelector('.user-name');
     userName.innerHTML =
     user.name.split(' ')[0] + ' ' + user.name.split(' ')[1][0];
-  }
+  },
 
   addCardToList(event, toggle, list, words, button) {
     let specificRecipe = recipeData.find(recipe => {
@@ -112,7 +112,7 @@ class DomUpdates {
       event.target.classList.remove(toggle);
       user.removeFromList(specificRecipe, list)
     }
-  }
+  },
   
   cardButtonConditionals(event) {
     if (event.target.classList.contains('favorite')) {
@@ -121,11 +121,11 @@ class DomUpdates {
       DomUpdates.displayDirections(event);
     } else if (event.target.classList.contains('home')) {
       console.log(DomUpdates)
-      domUpdates.getData();
+      DomUpdates.getData();
     } else if (event.target.classList.contains('add')) {
       DomUpdates.addCardToList(event, 'add-active', user.recipesToCook, 'View Saved', savedButton);
     }
-  }
+  },
 
   displayDirections(event) {
     let newRecipeInfo = recipeData.find(recipe => {
@@ -159,7 +159,7 @@ class DomUpdates {
       ${instruction.instruction}</li>
       `)
     })
-  }
+  },
 
   makeRecipes() {
     let named = recipeData.forEach(item => {
@@ -167,12 +167,12 @@ class DomUpdates {
       newRecipe.getIngredientNameByID()
     })
     return named
-  }
+  },
 
   searchCards() {
     let searched = user.findRecipe(searchBar.value, recipeData)
-    this.populateCards(searched);
-  }
+    DomUpdates.populateCards(searched);
+  },
 }
 
 

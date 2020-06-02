@@ -10,7 +10,7 @@ const searchBar = document.querySelector('.search-input')
 const searchButton = document.querySelector('.search-button')
 
 
-let domUpdates = new DomUpdates()
+let domUpdates = DomUpdates;
 
 window.onload = function() {
   domUpdates.getData()
