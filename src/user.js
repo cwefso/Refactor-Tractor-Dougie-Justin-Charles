@@ -30,6 +30,9 @@ class User {
       return recipe.name.toLowerCase().includes(smallString)
       || recipe.ingredients.find(ingredient => {
         return ingredient.name.toLowerCase().includes(smallString)
+        || recipe.tags.find(tag => {
+          return tag.toLowerCase().includes(smallString)
+        })
       })
     })
   }
