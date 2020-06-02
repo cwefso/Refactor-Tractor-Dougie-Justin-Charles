@@ -18,11 +18,6 @@ let users
 
 
 let DomUpdates = {
-  // constructor(user, pantry) {
-  //   DomUpdates.user = user    
-  //   DomUpdates.pantry = pantry
-  // }
-
   async getData() {
     users = await data.getUsersData()
     recipeData = await data.getRecipeData()
@@ -66,7 +61,6 @@ let DomUpdates = {
     })
     DomUpdates.makeRecipes()
   },
-
 
   viewFavorites() {
     if (!user.favoriteRecipes.length) {
