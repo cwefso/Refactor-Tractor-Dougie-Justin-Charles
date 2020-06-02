@@ -46,12 +46,9 @@ let DomUpdates = {
       cardArea.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
       class='card'>
           <header id='${recipe.id}' class='card-header'>
-            <label for='add-button' class='hidden'>Click to add recipe</label>
-            <button id='${recipe.id}' aria-label='add-button' class='add card-button hover-items active-items'>
+            <button id='${recipe.id}' aria-label='add-${recipe.name}-to-saved-recipes' class='add card-button hover-items active-items'>
             </button>
-            <label for='favorite-button' class='hidden'>Click to favorite recipe
-            </label>
-            <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite${recipe.id} card-button hover-items active-items'></button>
+            <button id='${recipe.id}' aria-label='add-${recipe.name}-to-favorite-recipes' class='favorite favorite${recipe.id} card-button hover-items active-items'></button>
           </header>
             <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
             <img id='${recipe.id}' tabindex='0' class='card-picture'
@@ -114,9 +111,6 @@ let DomUpdates = {
     } else if (event.target.classList.contains('card-picture')) {
       DomUpdates.displayDirections(event);
     } else if (event.target.classList.contains('home')) {
-      // console.log(DomUpdates)
-      // DomUpdates.getData();
-      console.log(recipeData)
       DomUpdates.populateCards(recipeData)
     } else if (event.target.classList.contains('add')) {
       DomUpdates.addCardToList(event, 'add-active', user.recipesToCook, 'View Saved', savedButton);
