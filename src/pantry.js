@@ -79,7 +79,7 @@ class Pantry {
 
   postToPantry(ingredientId, modificationNum) {
     let url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData"
-    return fetch(url, {
+    return fetch(url , {
       method: "post",
       headers: {
         'Accept': 'application/json',
@@ -96,9 +96,14 @@ class Pantry {
         "ingredientModification": modificationNum
       })
     })
-    .then( (response) => { 
-    //do something awesome that makes the world a better place
-    });
+    .then((response) => { 
+      let res = JSON.parse(response);
+      console.log(res)
+    })
+    .catch((error) => {
+      let err = JSON.parse(error);
+      console.error(err)
+    })
       // take ingredient list or pantry/ 
 
     
@@ -134,7 +139,7 @@ class Pantry {
     // add those amounts to the pantry
     // if the ingredient is in the pantry, then just add the amounts to whats there
     // if not then add that ingredient to the pantry
-    // post the new pantry to the api using fetch
+        // post the new pantry to the api using fetch
 
     // (and keep this up to date with the database via fetch)
   }
