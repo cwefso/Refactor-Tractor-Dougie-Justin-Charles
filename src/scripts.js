@@ -41,7 +41,7 @@ function onStartup() {
   });
   user = new User(newUser)
   pantry = new Pantry(newUser.pantry)
-  populateCards(recipeData);
+  populateCards(recipeData, 'add', 'favorite');
   greetUser();
 }
 
@@ -53,7 +53,7 @@ function viewFavorites() {
     favButton.innerHTML = 'Refresh Favorites'
     cardArea.innerHTML = '';
     recipeData = user.favoriteRecipes
-    populateCards(recipeData);
+    populateCards(recipeData, 'add', 'favorite favorite-active');
   }
 }
 
@@ -65,7 +65,7 @@ function viewSaved() {
     savedButton.innerHTML = 'Refresh Saved Recipes'
     cardArea.innerHTML = '';
     recipeData = user.recipesToCook
-    populateCards(recipeData);
+    populateCards(recipeData, 'add add-active', 'favorite');
   }
 }
 
@@ -76,6 +76,7 @@ function greetUser() {
 }
 
 function addCardToList(event, toggle, list, words, button) {
+
   let specificRecipe = recipeData.find(recipe => {
     if (recipe.id  === Number(event.target.id)) {
       return recipe;
@@ -149,10 +150,10 @@ function makeRecipes() {
 function searchCards(e) {
   e.preventDefault()
   let searched = user.findRecipe(searchBar.value, recipeData)
-  populateCards(searched)
+  populateCards(searched, 'add', 'favorite')
 }
 
-function populateCards(recipeData) {
+function populateCards(recipeData, addStatus, favStatus) {
   cardArea.innerHTML = '';
   if (cardArea.classList.contains('all')) {
     cardArea.classList.remove('all')
@@ -163,11 +164,11 @@ function populateCards(recipeData) {
     class='card'>
         <header id='${recipe.id}' class='card-header'>
           <label for='add-button' class='hidden'>Click to add recipe</label>
-          <button id='${recipe.id}' aria-label='add-button' class='add card-button hover-items active-items'>
+          <button id='${recipe.id}' aria-label='add-button' class='${addStatus} card-button hover-items active-items'>
           </button>
           <label for='favorite-button' class='hidden'>Click to favorite recipe
           </label>
-          <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite${recipe.id} card-button hover-items active-items'></button>
+          <button id='${recipe.id}' aria-label='favorite-button' class='${favStatus} favorite${recipe.id} card-button hover-items active-items'></button>
         </header>
           <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
           <img id='${recipe.id}' tabindex='0' class='card-picture'
