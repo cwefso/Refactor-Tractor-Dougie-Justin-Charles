@@ -120,7 +120,9 @@ class Pantry {
     })
   }
 
+
   removeIngredientsUsed() {}
+
 }
 
 

@@ -7,59 +7,36 @@ class User {
     this.recipesToCook = [];
   }
 
-  addToFavorites(recipe) {
-    if (!this.favoriteRecipes.includes(recipe)) {
-      this.favoriteRecipes.push(recipe)
+  addToList(recipe, list) {
+    if (!list.includes(recipe)) {
+      list.push(recipe)
     }
   }
 
-  removeFromFavorites(recipe) {
-    const i = this.favoriteRecipes.indexOf(recipe);
-    this.favoriteRecipes.splice(i, 1)
+  removeFromList(recipe, list) {
+    const i = list.indexOf(recipe);
+    list.splice(i, 1)
   }
 
-  filterFavorites(tag) {
-    return this.favoriteRecipes.filter(recipe => {
+  filterRecipes(tag, list) {
+    return list.filter(recipe => {
       return recipe.tags.includes(tag)
     });
   }
 
-  findFavorites(strgToSrch) {
-    return this.favoriteRecipes.filter(recipe => {
-      return recipe.name.includes(strgToSrch)
+  findRecipe(strgToSrch, arrayToSearch) {
+    let smallString = strgToSrch.toLowerCase()
+    return arrayToSearch.filter(recipe => {
+      return recipe.name.toLowerCase().includes(smallString)
       || recipe.ingredients.find(ingredient => {
-        return ingredient.name.includes(strgToSrch)
-      })
-    })
-  }
-
-  saveRecipe(recipe) {
-    if (!this.recipesToCook.includes(recipe)) {
-      this.recipesToCook.push(recipe)
-    }
-  }
-  
-  removeFromSaved(recipe) {
-    const i = this.recipesToCook.indexOf(recipe);
-    this.recipesToCook.splice(i, 1)
-  }
-
-  filterRecipesToCook() {
-    return this.recipesToCook.filter(recipe => {
-      return recipe.tags.includes(tag)
-    })
-  }
-
-  searchSavedRecipes(strgToSrch) {
-    return this.recipesToCook.filter(recipe => {
-      return recipe.name.includes(strgToSrch)
-      || recipe.ingredients.find(ingredient => {
-        return ingredient.name.includes(strgToSrch)
+        return ingredient.name.toLowerCase().includes(smallString)
+        || recipe.tags.find(tag => {
+          return tag.toLowerCase().includes(smallString)
+        })
       })
     })
   }
 
 }
-
 
 export default User;
