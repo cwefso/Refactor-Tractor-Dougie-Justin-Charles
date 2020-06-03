@@ -32,11 +32,11 @@ let DomUpdates = {
     });
     user = new User(newUser)
     pantry = new Pantry(newUser.pantry, newUser.id)
-    DomUpdates.populateCards(recipeData);
+    DomUpdates.populateCards(recipeData, 'add', 'favorite');
     DomUpdates.greetUser();
   },
 
-  populateCards(recipeData) {
+  populateCards(recipeData, saveStatus, favStatus) {
     cardArea.innerHTML = '';
     if (cardArea.classList.contains('all')) {
       cardArea.classList.remove('all')
@@ -46,12 +46,9 @@ let DomUpdates = {
       cardArea.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
       class='card'>
           <header id='${recipe.id}' class='card-header'>
-            <label for='add-button' class='hidden'>Click to add recipe</label>
-            <button id='${recipe.id}' aria-label='add-button' class='add card-button hover-items active-items'>
+            <button id='${recipe.id}' aria-label='add-${recipe.name}-to-saved-recipes' class='${saveStatus} card-button hover-items active-items'>
             </button>
-            <label for='favorite-button' class='hidden'>Click to favorite recipe
-            </label>
-            <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite${recipe.id} card-button hover-items active-items'></button>
+            <button id='${recipe.id}' aria-label='add-${recipe.name}-to-favorite-recipes' class='${favStatus} favorite${recipe.id} card-button hover-items active-items'></button>
           </header>
             <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
             <img id='${recipe.id}' tabindex='0' class='card-picture'
@@ -67,10 +64,8 @@ let DomUpdates = {
       favButton.innerHTML = 'You have no favorites!';
       return
     } else {
-      favButton.innerHTML = 'Refresh Favorites'
       cardArea.innerHTML = '';
-      // recipeData = user.favoriteRecipes
-      DomUpdates.populateCards(user.favoriteRecipes);
+      DomUpdates.populateCards(user.favoriteRecipes, 'add', 'favorite favorite-active');
     }
   },
 
@@ -79,10 +74,8 @@ let DomUpdates = {
       savedButton.innerHTML = 'You have no saved recipes!';
       return
     } else {
-      savedButton.innerHTML = 'Refresh Saved Recipes'
       cardArea.innerHTML = '';
-      // recipeData = user.recipesToCook
-      DomUpdates.populateCards(user.recipesToCook);
+      DomUpdates.populateCards(user.recipesToCook, 'add add-active', 'favorite');
     }
   },
 
@@ -114,10 +107,7 @@ let DomUpdates = {
     } else if (event.target.classList.contains('card-picture')) {
       DomUpdates.displayDirections(event);
     } else if (event.target.classList.contains('home')) {
-      // console.log(DomUpdates)
-      // DomUpdates.getData();
-      console.log(recipeData)
-      DomUpdates.populateCards(recipeData)
+      DomUpdates.populateCards(recipeData, 'add', 'favorite')
     } else if (event.target.classList.contains('add')) {
       DomUpdates.addCardToList(event, 'add-active', user.recipesToCook, 'View Saved', savedButton);
     }
@@ -134,14 +124,16 @@ let DomUpdates = {
     let costInDollars = (cost / 100).toFixed(2)
     recipeObject.getIngredientNameByID()
     cardArea.classList.add('all');
-    cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
+    cardArea.innerHTML = `<section aria-label='recipe-information'>
+    <h3>${recipeObject.name}</h3>
     <p class='all-recipe-info'>
     <strong>It will cost: </strong><span class='cost recipe-info'>
     $${costInDollars}</span><br><br>
     <strong>You will need: </strong><span class='ingredients recipe-info'></span>
     <strong>Instructions: </strong><ol><span class='instructions recipe-info'>
     </span></ol>
-    </p>`;
+    </p>
+    </section>`;
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
     recipeObject.ingredients.forEach(ingredient => {
@@ -167,7 +159,7 @@ let DomUpdates = {
 
   searchCards() {
     let searched = user.findRecipe(searchBar.value, recipeData)
-    DomUpdates.populateCards(searched);
+    DomUpdates.populateCards(searched, 'add', 'favorite');
   },
 }
 

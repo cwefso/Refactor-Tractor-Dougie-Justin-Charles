@@ -35,8 +35,8 @@ body {
 h1 {
   border-right: 2px solid $black;
   font-size: 255%;
-  margin-top: 0;
   margin-bottom: 0;
+  margin-top: 0;
   padding-top: 10px;
   text-align: center;
   width: 30%;
@@ -59,9 +59,8 @@ h1 {
 .search-button {
   background-color: $light-green;
   border: 1px solid $black;
-  width: 20%;
-  height: 100%;
   margin-top: 3px;
+  width: 20%;
 }
 
 .hover-items:hover {
@@ -85,8 +84,9 @@ h1 {
 
 .card-button {
   border: 1px solid $black;
-  height: 27px;
+  height: 7vh;
   margin: 3px;
+  width: 10%;
 }
 
 .hidden {
@@ -97,17 +97,17 @@ h1 {
 .favorite {
   background-color: $light-green;
   background-image: url(https://image.flaticon.com/icons/svg/149/149222.svg);
-  background-repeat: no-repeat;
   background-position: center;
+  background-repeat: no-repeat;
   background-size: contain;
   width: 13%;
 }
 
 .add {
-  background-color: #EBF5EE;
+  background-color: $light-green;
   background-image: url(https://image.flaticon.com/icons/svg/32/32339.svg);
-  background-repeat: no-repeat;
   background-position: center;
+  background-repeat: no-repeat;
   background-size: contain;
   width: 13%;
 }
@@ -127,6 +127,9 @@ img {
 .card {
   background-color: #D7F2FE;
   border: 3px solid $black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
 }
 
