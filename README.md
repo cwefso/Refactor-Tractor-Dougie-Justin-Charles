@@ -27,19 +27,20 @@
 
   In this project we worked with another developer's codebase to create an app that allows a user to find and save recipes, as well as getting directions to make the recipe. A user can also search the recipes by name, ingredient, or tag.
 
-### ![Front Page](https://i.gyazo.com/228dc8d246e5b4092778598567e4bd96.gif)
+![Front Page](https://gyazo.com/228dc8d246e5b4092778598567e4bd96.gif)
+
   A user is greeted and a display of recipes is presented.
 
-### ![Save to Favorites](https://i.gyazo.com/b57e52d61bb0e453d8ede4ecbf4124fd.gif)
+![Save to Favorites](https://i.gyazo.com/b57e52d61bb0e453d8ede4ecbf4124fd.gif)
   A recipe can be saved to a user's Favorite Recipe page. The view can then select that tab to view and search that list.
 
-### ![Save to Recipes to Make](https://i.gyazo.com/a94406c68087966f48951e9749f75312.gif)
+![Save to Recipes to Make](https://gyazo.com/a94406c68087966f48951e9749f75312.gif)
   The user can do the same with recipes to make.
 
-### ![Search](https://i.gyazo.com/bec69be9723e5f8550c51b2efed575f3.gif)
+![Search](https://gyazo.com/bec69be9723e5f8550c51b2efed575f3.gif)
   By using the search bar, a user can filter recipes by name, ingredient, or tag.
 
-### ![Ingredients](https://i.gyazo.com/976465bac26048eb9c18c6f3289092e2.gif)
+![Ingredients](https://gyazo.com/976465bac26048eb9c18c6f3289092e2.gif)
   By selecting a recipe, a user can see directions, as well as the cost of ingredients to make the specific recipe.
 
 
