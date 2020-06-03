@@ -71,7 +71,7 @@ let DomUpdates = {
 
   viewSaved() {
     if (!user.recipesToCook.length) {
-      savedButton.innerHTML = 'You have no saved recipes!';
+      savedButton.innerHTML = 'You have no recipes to cook!';
       return
     } else {
       cardArea.innerHTML = '';
@@ -109,7 +109,7 @@ let DomUpdates = {
     } else if (event.target.classList.contains('home')) {
       DomUpdates.populateCards(recipeData, 'add', 'favorite')
     } else if (event.target.classList.contains('add')) {
-      DomUpdates.addCardToList(event, 'add-active', user.recipesToCook, 'View Saved', savedButton);
+      DomUpdates.addCardToList(event, 'add-active', user.recipesToCook, 'View Recipes to Cook', savedButton);
     }
   },
 

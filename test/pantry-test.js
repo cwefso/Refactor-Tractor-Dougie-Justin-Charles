@@ -1,10 +1,10 @@
-const chai = require('chai');
+const chai = require('chai')
+, spies = require('chai-spies');
+chai.use(spies);
 const expect = chai.expect;
 import User from '../src/user.js';
 import Pantry from '../src/pantry.js';
 
-
-// const Ingredients = require('../src/ingredients.js');
 let userData
 let user1;
 let user1Pantry;
@@ -534,7 +534,7 @@ describe('Pantry', () => {
       expect(halfCost).to.equal(5715.75)
     })
   })
-  describe('cost to cook recipe', () => {
+  describe('add ingredients to pantry', () => {
     it('should add no ingredients to pantry if user has all ingredients', () => {
       
     })
@@ -545,4 +545,16 @@ describe('Pantry', () => {
 
     })
   })
+  describe('remove ingredients from pantry', () => {
+    it('should add no ingredients to pantry if user has all ingredients', () => {
+      
+    })
+    it('should add all ingredients to pantry if user has none', () => {
+
+    })
+    it('should add half ingredients to pantry if user has none', () => {
+
+    })
+  })
+
 })

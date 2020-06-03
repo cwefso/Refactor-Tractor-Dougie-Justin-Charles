@@ -1,105 +1,56 @@
-# Webpack Starter Kit
+# What's Cooking
 
-## Clone This Repo
+  A tool for finding and saving recipes.
 
-That's right, _clone_ not fork. You will use this repo multiple times, but you can only fork a repository once. So here is what you need to do to clone the repo and still be able to push changes to your repo:
+### Contributors:
+  - Carlyle Douglas (GitHub: [DougieDev](https://github.com/DougieDev))
+  - Justin Volk (GitHub: [jdvolk](https://github.com/jdvolk)) 
+  - Charles Wefso (GitHub: [CWefso](https://github.com/cwefso))
 
-1. Clone down this repo. Since you don't want to name your project "webpack-starter-kit", you can use an optional argument when you run `git clone` (you replace the `[...]` with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Remove the default remote: `git remote rm origin` (notice that `git remote -v` not gives you back nothing)
-1. Create a new repo on GitHub with the name of `[what you want to name the repo]` to be consistent with naming
-1. Copy the address that you would use to clone down this repo - something like `git@github.com:...`
-1. Add this remote to your cloned down repo: `git remote add origin [address you copied in the previous step]` - do not include the brackets
+## Learning Goals
 
-Now try to commit something and push it up to your new repo. If everything is setup correctly, you should see the changes on GitHub.
+  - Work with APIs and fetch.
+  - Testing DOM elements with Chai Spies
+  - Develop better practices for making commits and project workflow.
+  - Accessibility and leveraging ARIA tags.
+  - Refactoring another developers codebase.
+  - Writing DRY code.
 
-## Setup
+## Install Instructions
 
-After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo. 
+  - Clone down this repo
+  - Run ``` npm instal ```
+  - Run ``` npm start ```
+  - Go to [localhost.8080](http://localhost:8080) in your browser.
 
-Then install the library dependencies. Run:
+## Project Overview
 
-```bash
-npm install
-```
+  In this project we worked with another developer's codebase to create an app that allows a user to find and save recipes, as well as getting directions to make the recipe. A user can also search the recipes by name, ingredient, or tag.
 
-To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:8080/` and you should see a page with some `h1` text and a pink background. If that's the case, you're good to go. Enter `control + c` in your terminal to stop the server at any time.
+![Front Page](https://gyazo.com/228dc8d246e5b4092778598567e4bd96.gif)
 
-## Where to Add Your Code
+  A user is greeted and a display of recipes is presented.
 
-### JavaScript
+![Save to Favorites](https://i.gyazo.com/b57e52d61bb0e453d8ede4ecbf4124fd.gif)
+  A recipe can be saved to a user's Favorite Recipe page. The view can then select that tab to view and search that list.
 
-You have to be very intentional with where you add your feature code. This repo uses a tool called [webpack](https://webpack.js.org/) to combine many JavaScript files into one big file. Webpack enables you to have many, separate JavaScript files to keep your code organized and readable. Webpack expects all of your code files to be in a specific place, or else it doesn't know how to combine them all behind the scenes.
+![Save to Recipes to Make](https://gyazo.com/a94406c68087966f48951e9749f75312.gif)
+  The user can do the same with recipes to make.
 
-**Create all of your feature code files in the `src` directory.**
+![Search](https://gyazo.com/bec69be9723e5f8550c51b2efed575f3.gif)
+  By using the search bar, a user can filter recipes by name, ingredient, or tag.
 
-Since code is separated into multiple files, you need to use the `import` and `export` syntax to share code across file.
+![Ingredients](https://gyazo.com/976465bac26048eb9c18c6f3289092e2.gif)
+  By selecting a recipe, a user can see directions, as well as the cost of ingredients to make the specific recipe.
 
-Here is a video that walks through some information about [import and export](https://www.youtube.com/watch?v=_3oSWwapPKQ). There are a lot of resources out there about `import` and `export`, and resources will sometimes call them `ES6 modules`. It's something you will see in React and beyond.
 
-### HTML
+## Technologies Used
+  - Chai Spies
+  - APIs
+  - JavaScript
+  - HTML/CSS/SCSS
 
-Add the HTML you need in the `index.html` file in the `./src` directory. There is some boilerplate HTML that exists from the start that you can modify.
+## Systems/Practices
 
-### CSS (SCSS/SASS)
-
-This project is setup to use SCSS/SASS files by default instead of your regular CSS files. Add your SCSS files in the `src/css` directory. There is a `base.scss` file already there, but you can change this file and add multiple SCSS files in this directory.
-
-This might sound weird, but you need to `import` your SCSS files in the JavaScript entry file (`index.js`) for the styles to be applied to your HTML. The example `base.scss` file has already been imported in the JavaScript entry file as an example.
-
-### Images
-
-Add your image files in the `src/images` directory. Similar to CSS files, you need to `import` image files in the JavaScript entry file (`index.js`). Then go into the HTML and add an `img` element with the `src` attribute pointing to the `images` directory. There is an example in the `index.html` file for you to see.
-
-## How to View Your Code in Action
-
-In the terminal, run:
-
-```bash
-npm start
-```
-
-You will see a bunch of lines output to your terminal. One of those lines will be something like:
-
-```bash
-Project is running at http://localhost:8080/
-```
-
-Go to `http://localhost:8080/` in your browser to view your code running in the browser.
-
----
-
-## Test Files Organization
-
-Similar to feature code, your test code needs to be put in a specific place for it to run successfully.
-
-**Put all of your test files in the `test` directory.** As a convention, all test filenames should end with `-test.js`. For instance: `box-test.js`.
-
-## Running Your Tests
-
-Run your test suite using the command:
-
-```bash
-npm test
-```
-
-The test results will output to the terminal.
-
----
-
-## Linting Your Code
-
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
-
-Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory. 
-
-## Webpack?
-
-If you look in the `package.json` file, you'll see one of the library dependencies called `webpack`. If you're interested in learning more about what Webpack is and how it works behind the scenes, take a look through the [Webpack configuration documentation](https://webpack.js.org/concepts/).
-
-## Deploying to GitHub Pages
-
-_If you are finished with the functionality and testing of your project_, then you can consider deploying your project to the web! This way anyone can play it without cloning down your repo.
-
-[GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
-
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
+  - git/Version Control
+  - ARIA

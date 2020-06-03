@@ -65,13 +65,7 @@ class Pantry {
     },[])
     return ingredientsNeeded[0] ? ingredientsNeeded : null
   }
-  // fetchIngredientCost() {
-  //  const url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData";
-  //   return fetch(url)
-  //   .then(response => response.json())
-  //   .then(data => data.ingredientsData)
-  //   .catch(err => err.message);
-  // }
+
   returnCostToCook(recipe, ingredientData) {
     let ingredientsNeeded = this.returnIngredientsNeeded(recipe)
     if (!ingredientsNeeded) {
@@ -87,7 +81,7 @@ class Pantry {
 
   postToPantry(ingredientId, modificationNum) {
     let url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData"
-    return fetch(url, {
+      return fetch(url , {
       method: "post",
       headers: {
         'Accept': 'application/json',
@@ -105,11 +99,20 @@ class Pantry {
       })
     })
   }
+
   addIngredientsToPantry(recipe) {
     let ingredientsNeeded = this.returnIngredientsNeeded(recipe)
     ingredientsNeeded.forEach(ingredient => {
       let inPantry = this.returnIngredient(ingredient.id, this.pantry);
-      inPantry ? (inPantry.amount + ingredient.amount) : this.contents.push(ingredient)
+      let amountOfModification = inPantry.amount + ingredient.amount
+      if(inPantry) { 
+        ingredient.amount = amountOfModification
+        this.postToPantry(ingredient.id, amountOfModification)
+        
+      } else {
+        this.contents.push(ingredient)
+        this.postToPantry(ingredient.id, ingredient.amount)
+      }
     })
     this.postToPantry(ingredientsNeeded)
   }
@@ -117,5 +120,7 @@ class Pantry {
 }
 
 
-export default Pantry;
+  removeIngredientsUsed() {}
+
+}
 
