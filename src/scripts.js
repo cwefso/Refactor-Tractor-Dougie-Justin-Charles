@@ -6,7 +6,6 @@ const favButton = document.querySelector('.view-favorites');
 const savedButton = document.querySelector('.view-saved')
 const homeButton = document.querySelector('.home')
 const cardArea = document.querySelector('.all-cards');
-const searchBar = document.querySelector('.search-input')
 const searchButton = document.querySelector('.search-button')
 
 
