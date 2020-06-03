@@ -60,7 +60,6 @@ h1 {
   background-color: $light-green;
   border: 1px solid $black;
   width: 20%;
-  height: 100%;
   margin-top: 3px;
 }
 
@@ -85,8 +84,9 @@ h1 {
 
 .card-button {
   border: 1px solid $black;
-  height: 27px;
+  height: 7vh;
   margin: 3px;
+  width: 10%;
 }
 
 .hidden {
@@ -128,6 +128,9 @@ img {
   background-color: #D7F2FE;
   border: 3px solid $black;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 
