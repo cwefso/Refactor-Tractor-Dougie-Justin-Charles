@@ -1,12 +1,10 @@
 const chai = require('chai')
-, spies = require('chai-spies');
+  , spies = require('chai-spies');
 chai.use(spies);
 const expect = chai.expect;
 import User from '../src/user.js';
 import Pantry from '../src/pantry.js';
 
-
-// const Ingredients = require('../src/ingredients.js');
 let userData
 let user1;
 let user1Pantry;
@@ -46,7 +44,7 @@ describe('Pantry', () => {
     userData2 = {
       "id": 3,
       "name": "Justin Volk",
-      "pantry" : [
+      "pantry": [
         {
           "id": 12061,
           "amount": 0.5,
@@ -101,7 +99,7 @@ describe('Pantry', () => {
     halfUserData = {
       "id": 3,
       "name": "half recipe",
-      "pantry" : [
+      "pantry": [
         {
           "id": 12061,
           "amount": 0.25,
@@ -357,10 +355,10 @@ describe('Pantry', () => {
       expect(justinPantry.returnIds(recipeData.ingredients)).to.eql([
         12061,    19334,
         12104,    12115,
-         4047, 10019071,
-         8212,    19911,
-         8121,    12142,
-         2047,     2050
+        4047, 10019071,
+        8212,    19911,
+        8121,    12142,
+        2047,     2050
       ])
     })
   });
@@ -385,8 +383,8 @@ describe('Pantry', () => {
       expect(nullTest).to.equal(null)
     });
   })
-  describe('amount in recipe',() => {
-    it('should filter pantry from recipe',() => {
+  describe('amount in recipe', () => {
+    it('should filter pantry from recipe', () => {
       let filterTest = justinPantry.filterPantryFromRecipe(recipeData)
       expect(filterTest).to.eql([
         { id: 12061, amount: 0.5 },
@@ -403,7 +401,7 @@ describe('Pantry', () => {
         { id: 2050, amount: 1 }
       ])
     })
-    it('should return amount in recipe',() => {
+    it('should return amount in recipe', () => {
 
     })
   })

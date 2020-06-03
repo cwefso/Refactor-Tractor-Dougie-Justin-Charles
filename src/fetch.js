@@ -16,7 +16,7 @@ let data = {
         return data.wcUsersData
       })
       .catch(err => {
-        console.log(err.message)
+        alert(err.message)
       })
   },
 
@@ -30,7 +30,7 @@ let data = {
         return data.ingredientsData
       })
       .catch(err => {
-        console.log(err.message)
+        alert(err.message)
       })
   },
 
@@ -44,7 +44,7 @@ let data = {
         return data.recipeData
       })
       .catch(err => {
-        console.log(err.message)
+        alert(err.message)
       })
   }
 }

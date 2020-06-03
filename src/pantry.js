@@ -10,7 +10,7 @@ class Pantry {
 
   returnIngredient(id, ingredientList) {
     let inPantry = ingredientList.find(ingredient => {
-      if(ingredient.id === id) {
+      if (ingredient.id === id) {
         return ingredient
       }
     }) 
@@ -24,22 +24,26 @@ class Pantry {
 
   returnAmountInRecipe(recipe) {
     let recipeData = recipe.ingredients.reduce((ingredientData, ingredient) => {
-      ingredientData.push({'id' : ingredient.id,'amount' : ingredient.quantity.amount,})
+      ingredientData.push({'id': ingredient.id, 'amount': ingredient.quantity.amount, })
       return ingredientData
-    },[])
+    }, [])
     return recipeData;
   }
 
   hasEnough(recipe) {
     let ids = this.returnIds(this.contents);
-    if(typeof recipe !== 'object') return null;
-    if(ids.includes(undefined)) return false;
+    if (typeof recipe !== 'object') {
+      return null
+    }
+    if (ids.includes(undefined)) {
+      return false
+    }
     let recipeIngredientsInPantry = recipe.ingredients.reduce((total, ingredient) => {
-      if (ids.includes(ingredient.id)){
+      if (ids.includes(ingredient.id)) {
         total ++; 
       }
       return total;
-    },0);
+    }, 0);
     let amountInRecipe = recipe.ingredients.length;
     return recipeIngredientsInPantry === amountInRecipe ? true : false; 
   }
@@ -49,26 +53,24 @@ class Pantry {
     let filteredPantry = this.filterPantryFromRecipe(recipe)
     let ingredientsNeeded = amountInRecipe.reduce((totalNeeded, recipeIngredient) => {
       let pantryIngredient = this.returnIngredient(recipeIngredient.id, filteredPantry)
-      if(pantryIngredient) {
+      if (pantryIngredient) {
         let amountNeeded = recipeIngredient.amount -= pantryIngredient.amount
-        if(amountNeeded > 0) totalNeeded.push(recipeIngredient)
+        if (amountNeeded > 0) {
+          totalNeeded.push(recipeIngredient)
+        }
       } else {
         totalNeeded.push(recipeIngredient)
       }
       return totalNeeded
-    },[])
+    }, [])
     return ingredientsNeeded[0] ? ingredientsNeeded : null
   }
-  // fetchIngredientCost() {
-  //  const url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData";
-  //   return fetch(url)
-  //   .then(response => response.json())
-  //   .then(data => data.ingredientsData)
-  //   .catch(err => err.message);
-  // }
+
   returnCostToCook(recipe, ingredientData) {
     let ingredientsNeeded = this.returnIngredientsNeeded(recipe)
-    if(!ingredientsNeeded) return 0
+    if (!ingredientsNeeded) {
+      return 0
+    }
     let totalCostInCents = ingredientsNeeded.reduce((totalCost, ingredient) => {
       let costOfIngredient = this.returnIngredient(ingredient.id, ingredientData)
       let centsNeeded = costOfIngredient.estimatedCostInCents * ingredient.amount
@@ -79,7 +81,7 @@ class Pantry {
 
   postToPantry(ingredientId, modificationNum) {
     let url = "https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData"
-      return fetch(url , {
+    return fetch(url, {
       method: "post",
       headers: {
         'Accept': 'application/json',
@@ -88,19 +90,13 @@ class Pantry {
         'Content-Type': 'application/json',
         'Content-Length': '75'
       },
+
+
       body: JSON.stringify({
-        "userID" : this.id,
-        "ingredientID" : ingredientId,
+        "userID": this.id,
+        "ingredientID": ingredientId,
         "ingredientModification": modificationNum
       })
-    })
-    .then((response) => { 
-      let res = JSON.parse(response);
-      console.log(res)
-    })
-    .catch((error) => {
-      let err = JSON.parse(error);
-      console.error(err)
     })
   }
 
@@ -109,7 +105,7 @@ class Pantry {
     ingredientsNeeded.forEach(ingredient => {
       let inPantry = this.returnIngredient(ingredient.id, this.pantry);
       let amountOfModification = inPantry.amount + ingredient.amount
-      if(inPantry) { 
+      if (inPantry) { 
         ingredient.amount = amountOfModification
         this.postToPantry(ingredient.id, amountOfModification)
         
@@ -118,13 +114,9 @@ class Pantry {
         this.postToPantry(ingredient.id, ingredient.amount)
       }
     })
+    this.postToPantry(ingredientsNeeded)
   }
-
-
-  removeIngredientsUsed() {}
 
 }
 
-
-export default Pantry;
 

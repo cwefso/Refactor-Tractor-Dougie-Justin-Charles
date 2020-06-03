@@ -21,7 +21,7 @@ class Recipe {
     return costCounter;
   }
 
-   getIngredientNameByID() {
+  getIngredientNameByID() {
     return this.ingredients.map(item => {
       return this.ingredientsData.forEach(ingredient => {
         if (item.id === ingredient.id) {
