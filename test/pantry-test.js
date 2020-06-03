@@ -1,5 +1,5 @@
 const chai = require('chai')
-, spies = require('chai-spies');
+  , spies = require('chai-spies');
 chai.use(spies);
 const expect = chai.expect;
 import User from '../src/user.js';
